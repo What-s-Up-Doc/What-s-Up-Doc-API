@@ -1,0 +1,22 @@
+name: What-s-up-dock-API
+
+on:
+  push:
+    branches: [ feature/docker ]
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+
+    steps:
+      -
+        name: Checkout project
+        uses: actions/checkout@v2
+      -
+        name: Maven tests
+        run: |
+          mvn clean test
+      -
+        name: Maven build
+        run: |
+          mvn clean package

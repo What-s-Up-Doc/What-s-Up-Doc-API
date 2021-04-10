@@ -1,0 +1,31 @@
+name: What-s-up-doc-API
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+
+    steps:
+      -
+        name: Checkout project
+        uses: actions/checkout@v2
+      -
+        name: Maven tests
+        run: |
+          mvn clean test
+      -
+        name: Maven build
+        run: |
+          mvn clean package
+      -
+        name: Docker build
+        run: |
+          docker build -t whatsupdockproject/whatsupdoc-api:latest .
+      -
+        name: Push previous image on DockerHub
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login $DOCKER_REGISTRY --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push whatsupdockproject/whatsupdoc-api:latest

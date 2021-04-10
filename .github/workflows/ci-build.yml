@@ -1,4 +1,4 @@
-name: What-s-up-dock-API
+name: What-s-up-doc-API
 
 on:
   push:
@@ -20,3 +20,12 @@ jobs:
         name: Maven build
         run: |
           mvn clean package
+      -
+        name: Docker build
+        run: |
+          docker build -t whatsupdockproject/whatsupdoc-api:latest .
+      -
+        name: Push previous image on DockerHub
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login $DOCKER_REGISTRY --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push whatsupdockproject/whatsupdoc-api:latest

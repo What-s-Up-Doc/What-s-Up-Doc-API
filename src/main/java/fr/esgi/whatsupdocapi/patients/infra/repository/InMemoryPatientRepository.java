@@ -37,4 +37,12 @@ public class InMemoryPatientRepository implements PatientRepository {
     public Optional<Patient> findOne(String patientId) {
         return Optional.ofNullable(patientDb.get(patientId));
     }
+
+    @Override
+    public void deleteOne(String patientId) {
+        Patient patient = patientDb.get(patientId);
+        if (Objects.nonNull(patient)) {
+            patientDb.remove(patient);
+        }
+    }
 }

@@ -12,5 +12,6 @@ public interface PatientRepository {
                      String medical_history, String family_medical_history, String traitement);
         int count();
         List<Patient> findAll();
-        Optional<Patient> findOne(String userId);
+        Optional<Patient> findOne(String patientId);
+        void deleteOne(String patientId);
 }

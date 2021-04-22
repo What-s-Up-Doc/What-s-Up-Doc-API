@@ -1,6 +1,8 @@
 package fr.esgi.whatsupdocapi.doctors.infra.web.controller;
 
 import fr.esgi.whatsupdocapi.doctors.infra.web.adapter.DoctorAdapter;
+import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalArgumentsException;
+import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalIdException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.CreateDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorResponse;
 import fr.esgi.whatsupdocapi.doctors.service.DoctorService;
@@ -35,23 +37,23 @@ public class DoctorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorResponse> findById(
-            @PathVariable("id") String userId
+            @PathVariable("id") String doctorId
     ) {
-        return doctorService.findOne(userId)
+        return doctorService.findOne(doctorId)
                 .map(doctorAdapter::map)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody CreateDoctorRequest request) {
+    public ResponseEntity<?> createDoctor(@RequestBody CreateDoctorRequest request) {
 
         String doctorId;
         try{
             doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
         }catch (Exception e){
-            throw new IllegalArgumentException("Illegal arguments for patient creation");
+            throw new IllegalArgumentsException("Illegal arguments for patient creation");
         }
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -61,5 +63,13 @@ public class DoctorController {
         return ResponseEntity.created(uri).build();
     }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteDoctor(@PathVariable("id") String doctorId) {
+        try {
+            doctorService.deleteOne(doctorId);
+        } catch (Exception e) {
+            throw new IllegalIdException("Doctor Id non valide");
+        }
+    }
 
 }

@@ -1,5 +1,7 @@
 package fr.esgi.whatsupdocapi.patients.infra.web.controller;
 
+import fr.esgi.whatsupdocapi.patients.infra.web.exception.IllegalArgumentsException;
+import fr.esgi.whatsupdocapi.patients.infra.web.exception.IllegalIdException;
 import fr.esgi.whatsupdocapi.patients.service.PatientService;
 import fr.esgi.whatsupdocapi.patients.infra.web.adapter.PatientAdapter;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.CreatePatientRequest;
@@ -52,7 +54,7 @@ public class PatientController {
                     request.getBirthday(), request.isSmoker(), request.getHeight(), request.getWeight(),
                     request.getMedical_history(), request.getFamily_medical_history(), request.getTraitement());
         }catch (Exception e){
-            throw new IllegalArgumentException("Illegal arguments for patient creation");
+            throw new IllegalArgumentsException("Illegal arguments for patient creation");
         }
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -61,6 +63,15 @@ public class PatientController {
                 .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deletePatient(@PathVariable("id") String patientId) {
+        try {
+            patientService.deleteOne(patientId);
+        } catch (Exception e) {
+            throw new IllegalIdException("Patient Id non valide");
+        }
     }
 
 

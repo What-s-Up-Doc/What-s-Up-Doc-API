@@ -32,9 +32,11 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public Optional<Patient> findOne(String userId) {
-        return patientRepository.findOne(userId);
+    public Optional<Patient> findOne(String patientId) {
+        return patientRepository.findOne(patientId);
     }
 
-
+    public void deleteOne(String patientId){
+        patientRepository.deleteOne(patientId);
+    }
 }

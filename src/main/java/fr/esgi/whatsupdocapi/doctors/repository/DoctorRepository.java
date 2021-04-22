@@ -14,5 +14,7 @@ public interface DoctorRepository {
 
     List<Doctor> findAll();
 
-    Optional<Doctor> findOne(String userId);
+    Optional<Doctor> findOne(String doctorId);
+
+    void deleteOne(String doctorId);
 }

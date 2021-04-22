@@ -31,5 +31,9 @@ public class DoctorService {
         return doctorRepository.findOne(userId);
     }
 
+    public void deleteOne(String userId) {
+        doctorRepository.deleteOne(userId);
+    }
+
 
 }

@@ -17,4 +17,8 @@ public interface DoctorRepository {
     Optional<Doctor> findOne(String doctorId);
 
     void deleteOne(String doctorId);
+
+    void modify(String id, String firstname, String lastname,
+                String email, String password, String phone,
+                String gender, String speciality);
 }

@@ -2,8 +2,8 @@ package fr.esgi.whatsupdocapi.doctors.infra.repository;
 
 
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
-import org.springframework.stereotype.Repository;
 import fr.esgi.whatsupdocapi.doctors.repository.DoctorRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
@@ -42,5 +42,12 @@ public class InMemoryDoctorRepository implements DoctorRepository {
         }
     }
 
+    @Override
+    public void modify(String doctorId, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+        Doctor doctor = doctorDb.get(doctorId);
+        if (Objects.nonNull(doctor)) {
+            doctorDb.replace(doctorId, doctor, new Doctor(doctorId, firstname, lastname, email, password, phone, gender, speciality));
+        }
+    }
 
 }

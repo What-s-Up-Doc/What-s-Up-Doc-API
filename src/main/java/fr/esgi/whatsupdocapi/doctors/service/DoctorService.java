@@ -27,12 +27,16 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public Optional<Doctor> findOne(String userId) {
-        return doctorRepository.findOne(userId);
+    public Optional<Doctor> findOne(String doctorId) {
+        return doctorRepository.findOne(doctorId);
     }
 
-    public void deleteOne(String userId) {
-        doctorRepository.deleteOne(userId);
+    public void deleteOne(String doctorId) {
+        doctorRepository.deleteOne(doctorId);
+    }
+
+    public void modify(String id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+        doctorRepository.modify(id, firstname, lastname, email, password, phone, gender, speciality);
     }
 
 

@@ -4,7 +4,9 @@ import fr.esgi.whatsupdocapi.doctors.infra.web.adapter.DoctorAdapter;
 import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalArgumentsException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalIdException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.CreateDoctorRequest;
+import fr.esgi.whatsupdocapi.doctors.infra.web.request.ModifyDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorResponse;
+import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.doctors.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,10 +51,10 @@ public class DoctorController {
     public ResponseEntity<?> createDoctor(@RequestBody CreateDoctorRequest request) {
 
         String doctorId;
-        try{
+        try {
             doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new IllegalArgumentsException("Illegal arguments for patient creation");
         }
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -70,6 +72,20 @@ public class DoctorController {
         } catch (Exception e) {
             throw new IllegalIdException("Doctor Id non valide");
         }
+    }
+
+    @PutMapping
+    public void modifyDoctor(@RequestBody ModifyDoctorRequest request) {
+        Doctor doctor;
+        try {
+            doctor = new Doctor(request.getId(), request.getFirstname(), request.getLastname(),
+                    request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
+        } catch (Exception e) {
+            throw new IllegalArgumentsException("Illegal arguments for patient creation");
+        }
+        doctorService.modify(doctor.getId(), doctor.getFirstname(), doctor.getLastname(), doctor.getEmail(),
+                doctor.getPassword(), doctor.getPhone(), doctor.getGender(), doctor.getSpeciality());
+
     }
 
 }

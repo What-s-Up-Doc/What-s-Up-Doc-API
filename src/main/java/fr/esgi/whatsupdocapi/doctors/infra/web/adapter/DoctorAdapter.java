@@ -1,13 +1,13 @@
 package fr.esgi.whatsupdocapi.doctors.infra.web.adapter;
 
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorResponse;
-import org.springframework.stereotype.Component;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
+import org.springframework.stereotype.Component;
 
 @Component
 public
 class DoctorAdapter {
-    
+
     public DoctorResponse map(Doctor doctor) {
         return new DoctorResponse()
                 .setId(doctor.getId())

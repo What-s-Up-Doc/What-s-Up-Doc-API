@@ -17,9 +17,9 @@ public class PatientService {
     private final PatientRepository patientRepository;
 
     public String addPatient(String firstname, String lastname, String email,
-                          String password, String phone, String gender, String birthday,
-                          boolean isSmoker, double height, double weight,
-                          String medical_history, String family_medical_history, String traitement) {
+                             String password, String phone, String gender, String birthday,
+                             boolean isSmoker, double height, double weight,
+                             String medical_history, String family_medical_history, String traitement) {
         var patientId = patientRepository.store(firstname,
                 lastname, email, password, phone, gender,
                 birthday, isSmoker, height, weight, medical_history,
@@ -36,7 +36,16 @@ public class PatientService {
         return patientRepository.findOne(patientId);
     }
 
-    public void deleteOne(String patientId){
+    public void deleteOne(String patientId) {
         patientRepository.deleteOne(patientId);
+    }
+
+    public void modify(String id, String firstname, String lastname, String email,
+                       String password, String phone, String gender, String birthday,
+                       boolean isSmoker, double height, double weight,
+                       String medical_history, String family_medical_history, String traitement) {
+        patientRepository.modify(id, firstname, lastname, email, password, phone,
+                gender, birthday, isSmoker, height, weight, medical_history,
+                family_medical_history, traitement);
     }
 }

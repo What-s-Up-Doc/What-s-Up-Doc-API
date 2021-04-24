@@ -1,11 +1,13 @@
 package fr.esgi.whatsupdocapi.patients.infra.web.controller;
 
+import fr.esgi.whatsupdocapi.patients.infra.web.adapter.PatientAdapter;
 import fr.esgi.whatsupdocapi.patients.infra.web.exception.IllegalArgumentsException;
 import fr.esgi.whatsupdocapi.patients.infra.web.exception.IllegalIdException;
-import fr.esgi.whatsupdocapi.patients.service.PatientService;
-import fr.esgi.whatsupdocapi.patients.infra.web.adapter.PatientAdapter;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.CreatePatientRequest;
+import fr.esgi.whatsupdocapi.patients.infra.web.request.ModifyPatientRequest;
 import fr.esgi.whatsupdocapi.patients.infra.web.response.PatientResponse;
+import fr.esgi.whatsupdocapi.patients.model.Patient;
+import fr.esgi.whatsupdocapi.patients.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,12 +50,12 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<?> createPatient(@RequestBody CreatePatientRequest request) {
         String patientId;
-        try{
+        try {
             patientId = patientService.addPatient(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(),
                     request.getBirthday(), request.isSmoker(), request.getHeight(), request.getWeight(),
                     request.getMedical_history(), request.getFamily_medical_history(), request.getTraitement());
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new IllegalArgumentsException("Illegal arguments for patient creation");
         }
 
@@ -72,6 +74,24 @@ public class PatientController {
         } catch (Exception e) {
             throw new IllegalIdException("Patient Id non valide");
         }
+    }
+
+    @PutMapping
+    public void modifyDoctor(@RequestBody ModifyPatientRequest request) {
+        Patient patient;
+        try {
+            patient = new Patient(request.getId(), request.getFirstname(), request.getLastname(),
+                    request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(),
+                    request.getBirthday(), request.isSmoker(), request.getHeight(), request.getWeight(),
+                    request.getMedical_history(), request.getFamily_medical_history(), request.getTraitement());
+        } catch (Exception e) {
+            throw new IllegalArgumentsException("Illegal arguments for patient creation");
+        }
+        patientService.modify(patient.getId(), patient.getFirstname(), patient.getLastname(),
+                patient.getEmail(), patient.getPassword(), patient.getPhone(), patient.getGender(),
+                patient.getBirthday(), patient.isSmoker(), patient.getHeight(), patient.getWeight(),
+                patient.getMedical_history(), patient.getFamily_medical_history(), patient.getTraitement());
+
     }
 
 

@@ -45,4 +45,15 @@ public class InMemoryPatientRepository implements PatientRepository {
             patientDb.remove(patient);
         }
     }
+
+    @Override
+    public void modify(String patientId, String firstname, String lastname, String email, String password, String phone, String gender, String birthday,
+                       boolean isSmoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
+        Patient patient = patientDb.get(patientId);
+        if (Objects.nonNull(patient)) {
+            patientDb.replace(patientId, patient, new Patient(patientId, firstname, lastname, email, password,
+                    phone, gender, birthday, isSmoker, height, weight,
+                    medical_history, family_medical_history, traitement));
+        }
+    }
 }

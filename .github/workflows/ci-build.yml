@@ -2,7 +2,7 @@ name: What-s-up-doc-API
 
 on:
   push:
-    branches: [ main ]
+    branches: [ feature/deploy ]
 
 jobs:
   api:
@@ -29,3 +29,21 @@ jobs:
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login $DOCKER_REGISTRY --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push whatsupdockproject/whatsupdoc-api:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [api]
+
+    steps:
+      -
+        name: Azure login
+        run: |
+          az login -u ${{ secrets.AZ_LOGIN }} -p ${{ secrets.AZ_PASSWORD }}
+      -
+        name: Azure deploy service
+        run: |
+          az webapp config container set --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }} --docker-custom-image-name whatsupdockproject/whatsupdoc-api:latest
+      -
+        name: Azure logout
+        run: |
+          az logout

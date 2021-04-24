@@ -39,10 +39,13 @@ jobs:
         name: Azure login
         run: |
           az login -u ${{ secrets.AZ_LOGIN }} -p ${{ secrets.AZ_PASSWORD }}
+      - name: Azure deploy service
+        run: |
+          az webapp config container set --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }} --docker-custom-image-name whatsupdockproject/whatsupdoc-api:latest
       -
         name: Azure deploy service
         run: |
-          az webapp config container set --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }} --docker-custom-image-name whatsupdockproject/whatsupdoc-api:latest
+          az webapp delete --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }}
       -
         name: Azure logout
         run: |

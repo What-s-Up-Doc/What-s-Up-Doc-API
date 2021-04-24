@@ -43,7 +43,7 @@ jobs:
         run: |
           az webapp config container set --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }} --docker-custom-image-name whatsupdockproject/whatsupdoc-api:latest
       -
-        name: Azure deploy service
+        name: Azure restart service
         run: |
           az webapp restart --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }}
       -

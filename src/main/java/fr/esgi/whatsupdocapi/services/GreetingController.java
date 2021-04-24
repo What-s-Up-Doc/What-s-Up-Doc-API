@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingController {
 
     private static final String template = "Hello, %s!";
-    private static final String template2 = "Deploy, %s!";
+    private static final String template2 = "Test, %s!";
     private final AtomicLong counter = new AtomicLong();
     private final AtomicLong counterDeploy = new AtomicLong();
 
@@ -21,7 +21,7 @@ public class GreetingController {
     }
 
     @GetMapping("/deploy")
-    public Greeting deploy(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public Greeting deploy(@RequestParam(value = "name", defaultValue = "Deploy") String name) {
         return new Greeting(counterDeploy.incrementAndGet(), String.format(template2, name));
     }
 }

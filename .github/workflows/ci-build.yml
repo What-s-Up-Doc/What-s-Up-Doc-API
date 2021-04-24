@@ -45,7 +45,7 @@ jobs:
       -
         name: Azure deploy service
         run: |
-          az webapp delete --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }}
+          az webapp restart --name ${{ secrets.AZ_APP_NAME }} --resource-group ${{ secrets.AZ_RG_NAME }}
       -
         name: Azure logout
         run: |

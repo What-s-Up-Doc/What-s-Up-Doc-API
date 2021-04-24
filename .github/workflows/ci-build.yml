@@ -2,7 +2,7 @@ name: What-s-up-doc-API
 
 on:
   push:
-    branches: [ feature/deploy ]
+    branches: [ main ]
 
 jobs:
   api:

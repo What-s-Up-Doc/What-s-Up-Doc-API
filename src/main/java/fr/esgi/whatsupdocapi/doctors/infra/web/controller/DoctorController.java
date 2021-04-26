@@ -81,7 +81,7 @@ public class DoctorController {
             doctor = new Doctor(request.getId(), request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for patient creation");
+            throw new IllegalArgumentsException("Illegal arguments for doctor creation");
         }
         doctorService.modify(doctor.getId(), doctor.getFirstname(), doctor.getLastname(), doctor.getEmail(),
                 doctor.getPassword(), doctor.getPhone(), doctor.getGender(), doctor.getSpeciality());

@@ -3,11 +3,14 @@ package fr.esgi.whatsupdocapi.doctors.infra.repository;
 
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.doctors.repository.DoctorRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
+@Getter
 public class InMemoryDoctorRepository implements DoctorRepository {
 
     private final Map<String, Doctor> doctorDb = new HashMap<>();
@@ -36,10 +39,7 @@ public class InMemoryDoctorRepository implements DoctorRepository {
 
     @Override
     public void deleteOne(String doctorId) {
-        Doctor doctor = doctorDb.get(doctorId);
-        if (Objects.nonNull(doctor)) {
-            doctorDb.remove(doctor);
-        }
+        doctorDb.remove(doctorId);
     }
 
     @Override

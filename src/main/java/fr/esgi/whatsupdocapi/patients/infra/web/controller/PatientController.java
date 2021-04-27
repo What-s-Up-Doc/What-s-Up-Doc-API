@@ -5,11 +5,13 @@ import fr.esgi.whatsupdocapi.patients.infra.web.exception.IllegalArgumentsExcept
 import fr.esgi.whatsupdocapi.patients.infra.web.exception.IllegalIdException;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.CreatePatientRequest;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.ModifyPatientRequest;
+import fr.esgi.whatsupdocapi.patients.infra.web.response.PatientMinimalResponse;
 import fr.esgi.whatsupdocapi.patients.infra.web.response.PatientResponse;
 import fr.esgi.whatsupdocapi.patients.model.Patient;
 import fr.esgi.whatsupdocapi.patients.service.PatientService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,6 +20,8 @@ import java.net.URI;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -30,12 +34,18 @@ public class PatientController {
     private final PatientAdapter patientAdapter;
 
     @GetMapping
-    public ResponseEntity<List<PatientResponse>> getAllPatients() {
-        var patients = patientService.findAll()
+    public ResponseEntity<List<PatientMinimalResponse>> getAllPatients() {
+        List<PatientMinimalResponse> patients = patientService.findAll()
                 .stream()
-                .map(patientAdapter::map)
+                .map(patientAdapter::mapMinimalResponse)
                 .collect(toList());
 
+        for (final PatientMinimalResponse patient : patients) {
+            Link link = linkTo(methodOn(PatientController.class)
+                    .findById(patient.getId()))
+                    .withSelfRel();
+            patient.add(link);
+        }
         return ok(patients);
     }
 

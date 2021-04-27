@@ -8,6 +8,7 @@ import fr.esgi.whatsupdocapi.patients.infra.web.request.ModifyPatientRequest;
 import fr.esgi.whatsupdocapi.patients.infra.web.response.PatientResponse;
 import fr.esgi.whatsupdocapi.patients.model.Patient;
 import fr.esgi.whatsupdocapi.patients.service.PatientService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
+@Data
 @RequestMapping("/api/patients")
 @RequiredArgsConstructor
 public class PatientController {

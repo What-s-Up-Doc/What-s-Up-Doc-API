@@ -79,7 +79,5 @@ public class InMemoryDoctorRepositoryTest {
         assertEquals(inMemoryDoctorRepository.findAll().size(), inMemoryDoctorRepository.getDoctorDb().size());
 
     }
-    //Mockito.when(employeeRepository.findByName(alex.getName()))
-    //      .thenReturn(alex);
 
 }

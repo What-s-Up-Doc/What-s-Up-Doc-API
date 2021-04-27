@@ -8,6 +8,7 @@ import fr.esgi.whatsupdocapi.doctors.infra.web.request.ModifyDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorResponse;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.doctors.service.DoctorService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +22,19 @@ import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
+@Data
 @RequestMapping("/api/doctors")
 @RequiredArgsConstructor
 public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorAdapter doctorAdapter;
 
+    public DoctorAdapter getDoctorAdapter() {
+        return doctorAdapter;
+    }
+
     @GetMapping
-    public ResponseEntity<List<DoctorResponse>> getAllUsers() {
+    public ResponseEntity<List<DoctorResponse>> getAll() {
         var doctors = doctorService.findAll()
                 .stream()
                 .map(doctorAdapter::map)

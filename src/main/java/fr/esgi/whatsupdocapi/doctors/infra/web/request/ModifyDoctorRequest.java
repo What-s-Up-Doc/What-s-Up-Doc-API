@@ -1,8 +1,10 @@
 package fr.esgi.whatsupdocapi.doctors.infra.web.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class ModifyDoctorRequest {
     private String id;
     private String firstname;

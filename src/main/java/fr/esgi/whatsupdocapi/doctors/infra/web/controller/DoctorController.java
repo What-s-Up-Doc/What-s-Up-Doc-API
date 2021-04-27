@@ -5,11 +5,13 @@ import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalArgumentsExcepti
 import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalIdException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.CreateDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.ModifyDoctorRequest;
+import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorMinimalResponse;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorResponse;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.doctors.service.DoctorService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,6 +20,8 @@ import java.net.URI;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -29,17 +33,19 @@ public class DoctorController {
     private final DoctorService doctorService;
     private final DoctorAdapter doctorAdapter;
 
-    public DoctorAdapter getDoctorAdapter() {
-        return doctorAdapter;
-    }
-
     @GetMapping
-    public ResponseEntity<List<DoctorResponse>> getAll() {
-        var doctors = doctorService.findAll()
+    public ResponseEntity<List<DoctorMinimalResponse>> getAll() {
+        List<DoctorMinimalResponse> doctors = doctorService.findAll()
                 .stream()
-                .map(doctorAdapter::map)
+                .map(doctorAdapter::mapMinimalResponse)
                 .collect(toList());
 
+        for (final DoctorMinimalResponse doctor : doctors) {
+            Link link = linkTo(methodOn(DoctorController.class)
+                    .findById(doctor.getId()))
+                    .withSelfRel();
+            doctor.add(link);
+        }
         return ok(doctors);
     }
 

@@ -1,5 +1,6 @@
 package fr.esgi.whatsupdocapi.doctors.infra.web.adapter;
 
+import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorMinimalResponse;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorResponse;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import org.springframework.stereotype.Component;
@@ -18,5 +19,12 @@ class DoctorAdapter {
                 .setPhone(doctor.getPhone())
                 .setGender(doctor.getGender())
                 .setSpeciality(doctor.getSpeciality());
+    }
+
+    public DoctorMinimalResponse mapMinimalResponse(Doctor doctor) {
+        return new DoctorMinimalResponse()
+                .setId(doctor.getId())
+                .setFirstname(doctor.getFirstname())
+                .setLastname(doctor.getLastname());
     }
 }

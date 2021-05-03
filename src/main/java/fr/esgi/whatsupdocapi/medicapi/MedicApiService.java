@@ -42,10 +42,10 @@ public class MedicApiService {
     public List<Diagnosis> getDiagnosis(Gender gender, int yearOfBirth, int[] symptoms) throws URISyntaxException, IOException {
         MedicRequest request = new MedicRequest(gender.getKey(), yearOfBirth, symptoms, LANGUAGE);
         ResponseBody responseBody = getResponse("diagnosis", request);
+
         if(responseBody != null){
             ObjectMapper objectMapper = new ObjectMapper();
-            DiagnosisResponse diagnosisResponse = objectMapper.readValue(responseBody.string(), DiagnosisResponse.class);
-            return diagnosisResponse.getResponse();
+            return Arrays.asList(objectMapper.readValue(responseBody.string(), Diagnosis[].class));
         }
         return null;
 

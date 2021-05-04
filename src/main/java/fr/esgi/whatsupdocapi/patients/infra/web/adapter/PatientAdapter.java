@@ -23,8 +23,8 @@ class PatientAdapter {
                 .setHeight(patient.getHeight())
                 .setWeight(patient.getWeight())
                 .setMedical_history(patient.getMedical_history())
-                .setFamily_medical_history(patient.getFamily_medical_history());
-
+                .setFamily_medical_history(patient.getFamily_medical_history())
+                .setTraitement(patient.getTraitement());
     }
 
     public PatientMinimalResponse mapMinimalResponse(Patient patient) {

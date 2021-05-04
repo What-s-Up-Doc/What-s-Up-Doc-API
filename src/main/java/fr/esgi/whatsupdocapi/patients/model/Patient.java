@@ -1,9 +1,15 @@
 package fr.esgi.whatsupdocapi.patients.model;
 
 import fr.esgi.whatsupdocapi.core.User;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
 public class Patient extends User {
     private String birthday;
     private boolean smoker;

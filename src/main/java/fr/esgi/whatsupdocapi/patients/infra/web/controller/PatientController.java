@@ -39,7 +39,7 @@ public class PatientController {
                 .stream()
                 .map(patientAdapter::mapMinimalResponse)
                 .collect(toList());
-
+        if(patients.isEmpty()) return ResponseEntity.noContent().build();
         for (final PatientMinimalResponse patient : patients) {
             Link link = linkTo(methodOn(PatientController.class)
                     .findById(patient.getId()))
@@ -97,7 +97,7 @@ public class PatientController {
                     request.getBirthday(), request.isSmoker(), request.getHeight(), request.getWeight(),
                     request.getMedical_history(), request.getFamily_medical_history(), request.getTraitement());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for patient creation");
+            throw new IllegalArgumentsException("Illegal arguments for patient modification");
         }
         patientService.modify(patient.getId(), patient.getFirstname(), patient.getLastname(),
                 patient.getEmail(), patient.getPassword(), patient.getPhone(), patient.getGender(),

@@ -1,5 +1,6 @@
 package fr.esgi.whatsupdocapi.doctors.service;
 
+import fr.esgi.whatsupdocapi.doctors.infra.repository.JdbcDoctorRepository;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.doctors.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DoctorService {
 
-    private final DoctorRepository doctorRepository;
+    private final JdbcDoctorRepository doctorRepository;
 
     public int addDoctor(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         var doctorId = doctorRepository.store(firstname, lastname, email, password, phone, gender, speciality);

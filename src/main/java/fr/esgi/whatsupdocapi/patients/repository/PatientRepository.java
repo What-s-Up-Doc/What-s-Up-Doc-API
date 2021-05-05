@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PatientRepository {
-    String store(String firstname, String lastname, String email,
+    int store(String firstname, String lastname, String email,
                  String password, String phone, String gender, String birthday,
                  boolean isSmoker, double height, double weight,
                  String medical_history, String family_medical_history, String traitement);
@@ -15,11 +15,11 @@ public interface PatientRepository {
 
     List<Patient> findAll();
 
-    Optional<Patient> findOne(String patientId);
+    Optional<Patient> findOne(int patientId);
 
-    void deleteOne(String patientId);
+    void deleteOne(int patientId);
 
-    void modify(String id, String firstname, String lastname, String email,
+    void modify(int id, String firstname, String lastname, String email,
                 String password, String phone, String gender, String birthday,
                 boolean isSmoker, double height, double weight,
                 String medical_history, String family_medical_history, String traitement);

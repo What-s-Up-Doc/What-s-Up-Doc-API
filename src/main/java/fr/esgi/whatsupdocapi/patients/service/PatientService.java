@@ -16,7 +16,7 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
 
-    public String addPatient(String firstname, String lastname, String email,
+    public int addPatient(String firstname, String lastname, String email,
                              String password, String phone, String gender, String birthday,
                              boolean isSmoker, double height, double weight,
                              String medical_history, String family_medical_history, String traitement) {
@@ -32,15 +32,15 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public Optional<Patient> findOne(String patientId) {
+    public Optional<Patient> findOne(int patientId) {
         return patientRepository.findOne(patientId);
     }
 
-    public void deleteOne(String patientId) {
+    public void deleteOne(int patientId) {
         patientRepository.deleteOne(patientId);
     }
 
-    public void modify(String id, String firstname, String lastname, String email,
+    public void modify(int id, String firstname, String lastname, String email,
                        String password, String phone, String gender, String birthday,
                        boolean isSmoker, double height, double weight,
                        String medical_history, String family_medical_history, String traitement) {

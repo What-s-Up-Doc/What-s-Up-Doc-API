@@ -19,7 +19,7 @@ public class Patient extends User {
     private String family_medical_history;
     private String traitement;
 
-    public Patient(String id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
+    public Patient(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
         super(id, firstname, lastname, email, password, phone, gender);
         this.birthday = birthday;
         this.smoker = smoker;

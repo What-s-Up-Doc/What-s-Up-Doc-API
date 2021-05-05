@@ -51,7 +51,7 @@ public class PatientController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientResponse> findById(
-            @PathVariable("id") String patientId
+            @PathVariable("id") int patientId
     ) {
         return patientService.findOne(patientId)
                 .map(patientAdapter::map)
@@ -61,7 +61,7 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<?> createPatient(@RequestBody CreatePatientRequest request) {
-        String patientId;
+        int patientId;
         try {
             patientId = patientService.addPatient(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(),
@@ -80,7 +80,7 @@ public class PatientController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deletePatient(@PathVariable("id") String patientId) {
+    public void deletePatient(@PathVariable("id") int patientId) {
         try {
             patientService.deleteOne(patientId);
         } catch (Exception e) {

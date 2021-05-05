@@ -17,7 +17,7 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
 
-    public String addDoctor(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+    public int addDoctor(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         var doctorId = doctorRepository.store(firstname, lastname, email, password, phone, gender, speciality);
         log.info("Stored {}", lastname);
         return doctorId;
@@ -27,15 +27,15 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public Optional<Doctor> findOne(String doctorId) {
+    public Optional<Doctor> findOne(int doctorId) {
         return doctorRepository.findOne(doctorId);
     }
 
-    public void deleteOne(String doctorId) {
+    public void deleteOne(int doctorId) {
         doctorRepository.deleteOne(doctorId);
     }
 
-    public void modify(String id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         doctorRepository.modify(id, firstname, lastname, email, password, phone, gender, speciality);
     }
 

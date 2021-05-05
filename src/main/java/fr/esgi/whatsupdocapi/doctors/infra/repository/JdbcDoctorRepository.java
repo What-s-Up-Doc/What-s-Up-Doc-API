@@ -17,9 +17,9 @@ public class JdbcDoctorRepository implements DoctorRepository {
 
 
     @Override
-    public String store(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
-        var id = UUID.randomUUID().toString();
-        jdbcTemplate.update("INSERT INTO doctor (id, firstname, lastname, email, password, phone, gender, speciality) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", id, firstname, lastname, email, password, phone, gender, speciality);
+    public int store(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+        jdbcTemplate.update("INSERT INTO doctor (id, firstname, lastname, email, password, phone, gender, speciality) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, email, password, phone, gender, speciality);
+        int id = findOneFromEmail(email).get().getId();
         return id;
     }
 
@@ -34,20 +34,26 @@ public class JdbcDoctorRepository implements DoctorRepository {
     }
 
     @Override
-    public Optional<Doctor> findOne(String doctorId) {
+    public Optional<Doctor> findOne(int doctorId) {
         return Optional.ofNullable(
                 jdbcTemplate.queryForObject("select * from doctor where id = ?", mapper, new Object[]{ doctorId })
         );
     }
 
+    public Optional<Doctor> findOneFromEmail(String email) {
+        return Optional.ofNullable(
+                jdbcTemplate.queryForObject("select * from doctor where email = ?", mapper, new Object[]{ email })
+        );
+    }
+
     @Override
-    public void deleteOne(String doctorId) {
+    public void deleteOne(int doctorId) {
         String SQL = "DELETE FROM doctor WHERE id = ?";
         jdbcTemplate.update(SQL, doctorId);
     }
 
     @Override
-    public void modify(String id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         String SQL = "Update doctor set firstname = ?, lastname = ?, email = ?, password = ?, phone = ?, gender = ?, speciality = ? where id = ?";
         jdbcTemplate.update(SQL, firstname, lastname, email, password, phone, gender, speciality, id);
     }

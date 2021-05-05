@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 public class Doctor extends User {
     private String speciality;
 
-    public Doctor(String id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+    public Doctor(int id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         super(id, firstname, lastname, email, password, phone, gender);
         this.speciality = speciality;
     }

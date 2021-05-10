@@ -2,6 +2,7 @@ package fr.esgi.whatsupdocapi.medicapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.esgi.whatsupdocapi.medicapi.model.*;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -19,10 +20,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MedicApiService {
-
-    private static final String mainURL = "https://priaid-symptom-checker-v1.p.rapidapi.com/";
-    private static final String KEY = "";
-    private static final String LANGUAGE = "fr-fr";
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String mainURL = dotenv.get("EXTERNAL_API_URL");
+    private static final String KEY = dotenv.get("EXTERNAL_API_KEY");
+    private static final String LANGUAGE = dotenv.get("EXTERNAL_API_LANGUAGE");
 
     private ResponseBody getResponse(String urlSuffix, MedicRequest request) throws IOException, URISyntaxException {
         URL url = request.buildUrl(mainURL + urlSuffix);

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DoctorRepository {
-    String store(String firstname, String lastname,
+    int store(String firstname, String lastname,
                  String email, String password, String phone,
                  String gender, String speciality);
 
@@ -14,11 +14,11 @@ public interface DoctorRepository {
 
     List<Doctor> findAll();
 
-    Optional<Doctor> findOne(String doctorId);
+    Optional<Doctor> findOne(int doctorId);
 
-    void deleteOne(String doctorId);
+    void deleteOne(int doctorId);
 
-    void modify(String id, String firstname, String lastname,
+    void modify(int id, String firstname, String lastname,
                 String email, String password, String phone,
                 String gender, String speciality);
 }

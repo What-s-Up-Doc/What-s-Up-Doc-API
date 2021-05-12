@@ -39,7 +39,7 @@ public class PatientController {
                 .stream()
                 .map(patientAdapter::mapMinimalResponse)
                 .collect(toList());
-
+        if(patients.isEmpty()) return ResponseEntity.noContent().build();
         for (final PatientMinimalResponse patient : patients) {
             Link link = linkTo(methodOn(PatientController.class)
                     .findById(patient.getId()))
@@ -51,7 +51,7 @@ public class PatientController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientResponse> findById(
-            @PathVariable("id") String patientId
+            @PathVariable("id") int patientId
     ) {
         return patientService.findOne(patientId)
                 .map(patientAdapter::map)
@@ -61,7 +61,7 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<?> createPatient(@RequestBody CreatePatientRequest request) {
-        String patientId;
+        int patientId;
         try {
             patientId = patientService.addPatient(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(),
@@ -80,7 +80,7 @@ public class PatientController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deletePatient(@PathVariable("id") String patientId) {
+    public void deletePatient(@PathVariable("id") int patientId) {
         try {
             patientService.deleteOne(patientId);
         } catch (Exception e) {
@@ -97,7 +97,7 @@ public class PatientController {
                     request.getBirthday(), request.isSmoker(), request.getHeight(), request.getWeight(),
                     request.getMedical_history(), request.getFamily_medical_history(), request.getTraitement());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for patient creation");
+            throw new IllegalArgumentsException("Illegal arguments for patient modification");
         }
         patientService.modify(patient.getId(), patient.getFirstname(), patient.getLastname(),
                 patient.getEmail(), patient.getPassword(), patient.getPhone(), patient.getGender(),

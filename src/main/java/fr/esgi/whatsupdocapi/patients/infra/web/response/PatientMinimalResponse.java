@@ -7,7 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Data
 @Accessors(chain = true)
 public class PatientMinimalResponse extends RepresentationModel<PatientMinimalResponse> {
-    private String id;
+    private int id;
     private String firstname;
     private String lastname;
 }

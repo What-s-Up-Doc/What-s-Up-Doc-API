@@ -40,6 +40,7 @@ public class DoctorController {
                 .map(doctorAdapter::mapMinimalResponse)
                 .collect(toList());
 
+        if(doctors.isEmpty()) return ResponseEntity.noContent().build();
         for (final DoctorMinimalResponse doctor : doctors) {
             Link link = linkTo(methodOn(DoctorController.class)
                     .findById(doctor.getId()))
@@ -51,7 +52,7 @@ public class DoctorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorResponse> findById(
-            @PathVariable("id") String doctorId
+            @PathVariable("id") int doctorId
     ) {
         return doctorService.findOne(doctorId)
                 .map(doctorAdapter::map)
@@ -62,12 +63,12 @@ public class DoctorController {
     @PostMapping
     public ResponseEntity<?> createDoctor(@RequestBody CreateDoctorRequest request) {
 
-        String doctorId;
+        int doctorId;
         try {
             doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for patient creation");
+            throw new IllegalArgumentsException("Illegal arguments for doctor creation");
         }
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -78,7 +79,7 @@ public class DoctorController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteDoctor(@PathVariable("id") String doctorId) {
+    public void deleteDoctor(@PathVariable("id") int doctorId) {
         try {
             doctorService.deleteOne(doctorId);
         } catch (Exception e) {
@@ -93,7 +94,7 @@ public class DoctorController {
             doctor = new Doctor(request.getId(), request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for doctor creation");
+            throw new IllegalArgumentsException("Illegal arguments for doctor modification");
         }
         doctorService.modify(doctor.getId(), doctor.getFirstname(), doctor.getLastname(), doctor.getEmail(),
                 doctor.getPassword(), doctor.getPhone(), doctor.getGender(), doctor.getSpeciality());

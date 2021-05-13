@@ -2,7 +2,6 @@ package fr.esgi.whatsupdocapi.doctors.service;
 
 import fr.esgi.whatsupdocapi.doctors.infra.repository.JdbcDoctorRepository;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
-import fr.esgi.whatsupdocapi.doctors.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

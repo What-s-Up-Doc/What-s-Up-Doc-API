@@ -1,7 +1,7 @@
 package fr.esgi.whatsupdocapi.patients.service;
 
 import fr.esgi.whatsupdocapi.patients.model.Patient;
-import fr.esgi.whatsupdocapi.patients.repository.PatientRepository;
+import fr.esgi.whatsupdocapi.patients.model.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

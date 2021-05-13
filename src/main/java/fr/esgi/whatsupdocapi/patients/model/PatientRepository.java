@@ -1,4 +1,4 @@
-package fr.esgi.whatsupdocapi.patients.repository;
+package fr.esgi.whatsupdocapi.patients.model;
 
 import fr.esgi.whatsupdocapi.patients.model.Patient;
 

@@ -1,21 +1,22 @@
 package fr.esgi.whatsupdocapi.doctors.infra.repository;
 
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
-import fr.esgi.whatsupdocapi.doctors.repository.DoctorRepository;
+import fr.esgi.whatsupdocapi.doctors.model.DoctorRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 @Getter
 @RequiredArgsConstructor
 public class JdbcDoctorRepository implements DoctorRepository {
 
+    @Autowired
     private final JdbcTemplate jdbcTemplate;
     private final DoctorRowMapper mapper;
 

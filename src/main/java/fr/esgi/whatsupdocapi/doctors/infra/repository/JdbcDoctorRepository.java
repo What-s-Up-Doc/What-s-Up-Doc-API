@@ -47,8 +47,9 @@ public class JdbcDoctorRepository implements DoctorRepository {
     }
 
     public Doctor findOneFromEmail(String email) {
-        Doctor doctor = jdbcTemplate.queryForObject("select * from doctor where email = ?", mapper, new Object[]{ email });
-        return Objects.isNull(doctor)? doctor: null;
+        List<Doctor> doctors = jdbcTemplate.query("select * from doctor where email = ?", mapper, new Object[]{ email });
+        if(doctors.isEmpty()) return null;
+        return doctors.get(0);
     }
 
     @Override

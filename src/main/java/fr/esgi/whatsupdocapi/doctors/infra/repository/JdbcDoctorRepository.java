@@ -25,8 +25,7 @@ public class JdbcDoctorRepository implements DoctorRepository {
     @Override
     public int store(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         jdbcTemplate.update("INSERT INTO doctor (id, firstname, lastname, email, password, phone, gender, speciality) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, email, password, phone, gender, speciality);
-        int id = findOneFromEmail(email).getId();
-        return id;
+        return findOneFromEmail(email).getId();
     }
 
     @Override

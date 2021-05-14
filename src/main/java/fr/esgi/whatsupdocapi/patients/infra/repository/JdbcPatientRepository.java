@@ -22,10 +22,9 @@ public class JdbcPatientRepository implements PatientRepository {
 
     @Override
     public int store(String firstname, String lastname, String email, String password, String phone, String gender, String birthday, int smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
-        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                null, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment);
-        int id = findOneFromEmail(email).getId();
-        return id;
+        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment);
+        return findOneFromEmail(email).getId();
     }
 
     @Override
@@ -34,7 +33,7 @@ public class JdbcPatientRepository implements PatientRepository {
     }
 
     public Patient findOneFromEmail(String email) {
-        List<Patient> patients = jdbcTemplate.query("select * from doctor where email = ?", mapper, new Object[]{email});
+        List<Patient> patients = jdbcTemplate.query("select * from patient where email = ?", mapper, new Object[]{email});
         if (patients.isEmpty()) return null;
         return patients.get(0);
     }

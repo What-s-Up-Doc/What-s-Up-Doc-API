@@ -1,7 +1,7 @@
 package fr.esgi.whatsupdocapi.patients.service;
 
+import fr.esgi.whatsupdocapi.patients.infra.repository.JdbcPatientRepository;
 import fr.esgi.whatsupdocapi.patients.model.Patient;
-import fr.esgi.whatsupdocapi.patients.model.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PatientService {
 
-    private final PatientRepository patientRepository;
+    private final JdbcPatientRepository patientRepository;
 
     public int addPatient(String firstname, String lastname, String email,
-                             String password, String phone, String gender, String birthday,
-                             boolean isSmoker, double height, double weight,
-                             String medical_history, String family_medical_history, String traitement) {
+                          String password, String phone, String gender, String birthday,
+                          boolean isSmoker, double height, double weight,
+                          String medical_history, String family_medical_history, String traitement) {
         var patientId = patientRepository.store(firstname,
                 lastname, email, password, phone, gender,
                 birthday, isSmoker, height, weight, medical_history,
@@ -47,5 +47,9 @@ public class PatientService {
         patientRepository.modify(id, firstname, lastname, email, password, phone,
                 gender, birthday, isSmoker, height, weight, medical_history,
                 family_medical_history, traitement);
+    }
+
+    public Patient findPatientByEmail(String email) {
+        return patientRepository.findOneFromEmail(email);
     }
 }

@@ -19,5 +19,5 @@ public class ModifyPatientRequest {
     private double weight;
     private String medical_history;
     private String family_medical_history;
-    private String traitement;
+    private String treatment;
 }

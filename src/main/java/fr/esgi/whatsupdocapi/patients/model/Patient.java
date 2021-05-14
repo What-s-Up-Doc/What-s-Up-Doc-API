@@ -17,9 +17,9 @@ public class Patient extends User {
     private double weight;
     private String medical_history;
     private String family_medical_history;
-    private String traitement;
+    private String treatment;
 
-    public Patient(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
+    public Patient(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
         super(id, firstname, lastname, email, password, phone, gender);
         this.birthday = birthday;
         this.smoker = smoker;
@@ -27,6 +27,6 @@ public class Patient extends User {
         this.weight = weight;
         this.medical_history = medical_history;
         this.family_medical_history = family_medical_history;
-        this.traitement = traitement;
+        this.treatment = treatment;
     }
 }

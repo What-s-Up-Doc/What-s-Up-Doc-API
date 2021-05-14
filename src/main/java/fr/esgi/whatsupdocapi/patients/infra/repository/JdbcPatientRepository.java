@@ -21,10 +21,10 @@ public class JdbcPatientRepository implements PatientRepository {
     private final PatientRowMapper mapper;
 
     @Override
-    public int store(String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
-        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, traitement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                null, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, traitement);
-        int id = findOneFromEmail(email).get().getId();
+    public int store(String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
+        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                null, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment);
+        int id = findOneFromEmail(email).getId();
         return id;
     }
 
@@ -33,10 +33,10 @@ public class JdbcPatientRepository implements PatientRepository {
         return jdbcTemplate.queryForObject("select count(*) from patient", Integer.class);
     }
 
-    public Optional<Patient> findOneFromEmail(String email) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from doctor where email = ?", mapper, new Object[]{ email })
-        );
+    public Patient findOneFromEmail(String email) {
+        List<Patient> patients = jdbcTemplate.query("select * from doctor where email = ?", mapper, new Object[]{email});
+        if (patients.isEmpty()) return null;
+        return patients.get(0);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class JdbcPatientRepository implements PatientRepository {
     @Override
     public Optional<Patient> findOne(int patientId) {
         return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from patient where id = ?", mapper, new Object[]{ patientId })
+                jdbcTemplate.queryForObject("select * from patient where id = ?", mapper, new Object[]{patientId})
         );
     }
 
@@ -58,9 +58,9 @@ public class JdbcPatientRepository implements PatientRepository {
     }
 
     @Override
-    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
-        String SQL = "Update patient set firstname = ?, lastname = ?, email = ?, password = ?, phone = ?, gender = ?, speciality = ?, birthday = ?, smoker = ?, height = ?, weight = ?, medical_history = ?, family_medical_history = ?, traitement = ? where id = ?";
-        jdbcTemplate.update(SQL, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, traitement, id);
+    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
+        String SQL = "Update patient set firstname = ?, lastname = ?, email = ?, password = ?, phone = ?, gender = ?, speciality = ?, birthday = ?, smoker = ?, height = ?, weight = ?, medical_history = ?, family_medical_history = ?, treatment = ? where id = ?";
+        jdbcTemplate.update(SQL, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment, id);
     }
 
 }

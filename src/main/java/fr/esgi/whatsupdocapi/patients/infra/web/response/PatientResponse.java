@@ -10,7 +10,6 @@ public class PatientResponse {
     private String firstname;
     private String lastname;
     private String email;
-    private String password;
     private String phone;
     private String gender;
     private String birthday;
@@ -19,5 +18,5 @@ public class PatientResponse {
     private double weight;
     private String medical_history;
     private String family_medical_history;
-    private String traitement;
+    private String treatment;
 }

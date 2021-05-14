@@ -15,7 +15,6 @@ class PatientAdapter {
                 .setFirstname(patient.getFirstname())
                 .setLastname(patient.getLastname())
                 .setEmail(patient.getEmail())
-                .setPassword(patient.getPassword())
                 .setPhone(patient.getPhone())
                 .setGender(patient.getGender())
                 .setBirthday(patient.getBirthday())
@@ -24,7 +23,7 @@ class PatientAdapter {
                 .setWeight(patient.getWeight())
                 .setMedical_history(patient.getMedical_history())
                 .setFamily_medical_history(patient.getFamily_medical_history())
-                .setTraitement(patient.getTraitement());
+                .setTreatment(patient.getTreatment());
     }
 
     public PatientMinimalResponse mapMinimalResponse(Patient patient) {

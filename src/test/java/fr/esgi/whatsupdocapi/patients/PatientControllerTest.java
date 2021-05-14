@@ -53,7 +53,7 @@ public class PatientControllerTest {
     @Test
     public void shouldCallCreatePatient()throws Exception{
         CreatePatientRequest request = new CreatePatientRequest("firstname", "lastname",
-                "email", "password", "phone", "female", "birthday",true,
+                "email", "password", "password", "phone", "female", "birthday",true,
                 0, 0, "medical_history", "family_medical_history", "traitement");
 
         MockHttpServletRequest requestHttp = new MockHttpServletRequest();
@@ -69,7 +69,7 @@ public class PatientControllerTest {
                 request.getPhone(), request.getGender(), request.getBirthday(),
                 request.isSmoker(), request.getHeight(), request.getWeight(),
                 request.getMedical_history(), request.getFamily_medical_history(),
-                request.getTraitement());
+                request.getTreatment());
     }
 
     @Test
@@ -84,6 +84,6 @@ public class PatientControllerTest {
                 request.getPhone(), request.getGender(), request.getBirthday(),
                 request.isSmoker(), request.getHeight(), request.getWeight(),
                 request.getMedical_history(), request.getFamily_medical_history(),
-                request.getTraitement());
+                request.getTreatment());
     }
 }

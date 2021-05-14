@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -24,7 +25,7 @@ public class JdbcDoctorRepository implements DoctorRepository {
     @Override
     public int store(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         jdbcTemplate.update("INSERT INTO doctor (id, firstname, lastname, email, password, phone, gender, speciality) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, email, password, phone, gender, speciality);
-        int id = findOneFromEmail(email).get().getId();
+        int id = findOneFromEmail(email).getId();
         return id;
     }
 
@@ -45,10 +46,9 @@ public class JdbcDoctorRepository implements DoctorRepository {
         );
     }
 
-    public Optional<Doctor> findOneFromEmail(String email) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from doctor where email = ?", mapper, new Object[]{ email })
-        );
+    public Doctor findOneFromEmail(String email) {
+        Doctor doctor = jdbcTemplate.queryForObject("select * from doctor where email = ?", mapper, new Object[]{ email });
+        return Objects.isNull(doctor)? doctor: null;
     }
 
     @Override

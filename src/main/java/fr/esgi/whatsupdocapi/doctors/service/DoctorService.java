@@ -39,5 +39,7 @@ public class DoctorService {
         doctorRepository.modify(id, firstname, lastname, email, password, phone, gender, speciality);
     }
 
-
+    public Doctor findDoctorByEmail(String email){
+        return doctorRepository.findOneFromEmail(email);
+    }
 }

@@ -1,10 +1,13 @@
 package fr.esgi.whatsupdocapi.doctors.infra.web.controller;
 
+import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import fr.esgi.whatsupdocapi.doctors.infra.web.adapter.DoctorAdapter;
 import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalArgumentsException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalIdException;
+import fr.esgi.whatsupdocapi.doctors.infra.web.helper.DoctorControllerHelper;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.CreateDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.ModifyDoctorRequest;
+import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorIdResponse;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorMinimalResponse;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorResponse;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
@@ -12,6 +15,7 @@ import fr.esgi.whatsupdocapi.doctors.service.DoctorService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -61,21 +65,26 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createDoctor(@RequestBody CreateDoctorRequest request) {
+    public ResponseEntity<DoctorIdResponse> createDoctor(@RequestBody CreateDoctorRequest request) {
 
         int doctorId;
+        System.out.println(request.getPassword() + " " + request.getConfirmedPassword());
+        if(!DoctorControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword())){
+            throw new IllegalArgumentsException("The confirmed password doesn't match the password.");
+        }
+        if(!DoctorControllerHelper.verifyUniqueEmailInRepository(request.getEmail(), doctorService.findDoctorByEmail(request.getEmail()))){
+            throw new IllegalArgumentsException("A user with this email address has already been created.");
+        }
         try {
             doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
         } catch (Exception e) {
             throw new IllegalArgumentsException("Illegal arguments for doctor creation");
         }
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(doctorId)
-                .toUri();
 
-        return ResponseEntity.created(uri).build();
+        DoctorIdResponse doctorIdResponse = new DoctorIdResponse();
+        doctorIdResponse.setId(doctorId);
+        return new ResponseEntity<>(doctorIdResponse, HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")

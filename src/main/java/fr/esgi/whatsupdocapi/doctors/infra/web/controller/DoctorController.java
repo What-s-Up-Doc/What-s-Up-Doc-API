@@ -68,13 +68,8 @@ public class DoctorController {
     public ResponseEntity<DoctorIdResponse> createDoctor(@RequestBody CreateDoctorRequest request) {
 
         int doctorId;
-        System.out.println(request.getPassword() + " " + request.getConfirmedPassword());
-        if(!DoctorControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword())){
-            throw new IllegalArgumentsException("The confirmed password doesn't match the password.");
-        }
-        if(!DoctorControllerHelper.verifyUniqueEmailInRepository(request.getEmail(), doctorService.findDoctorByEmail(request.getEmail()))){
-            throw new IllegalArgumentsException("A user with this email address has already been created.");
-        }
+        DoctorControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword());
+        DoctorControllerHelper.verifyUniqueEmailInRepository(request.getEmail(), doctorService.findDoctorByEmail(request.getEmail()));
         try {
             doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());

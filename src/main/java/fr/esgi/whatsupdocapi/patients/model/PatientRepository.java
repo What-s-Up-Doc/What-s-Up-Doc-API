@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface PatientRepository {
     int store(String firstname, String lastname, String email,
               String password, String phone, String gender, String birthday,
-              boolean isSmoker, double height, double weight,
+              int isSmoker, double height, double weight,
               String medical_history, String family_medical_history, String traitement);
 
     int count();
@@ -19,6 +19,6 @@ public interface PatientRepository {
 
     void modify(int id, String firstname, String lastname, String email,
                 String password, String phone, String gender, String birthday,
-                boolean isSmoker, double height, double weight,
+                int isSmoker, double height, double weight,
                 String medical_history, String family_medical_history, String traitement);
 }

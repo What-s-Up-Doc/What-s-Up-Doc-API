@@ -12,14 +12,15 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Patient extends User {
     private String birthday;
-    private boolean smoker;
+    private int smoker;
     private double height;
     private double weight;
     private String medical_history;
     private String family_medical_history;
     private String treatment;
 
-    public Patient(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
+    public Patient(int id, String firstname, String lastname, String email, String password, String phone,
+                   String gender, String birthday, int smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
         super(id, firstname, lastname, email, password, phone, gender);
         this.birthday = birthday;
         this.smoker = smoker;

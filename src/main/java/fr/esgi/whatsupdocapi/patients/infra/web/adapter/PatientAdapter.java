@@ -18,7 +18,7 @@ class PatientAdapter {
                 .setPhone(patient.getPhone())
                 .setGender(patient.getGender())
                 .setBirthday(patient.getBirthday())
-                .setSmoker(patient.isSmoker())
+                .setSmoker(patient.getSmoker())
                 .setHeight(patient.getHeight())
                 .setWeight(patient.getWeight())
                 .setMedical_history(patient.getMedical_history())

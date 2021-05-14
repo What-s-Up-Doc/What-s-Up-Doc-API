@@ -14,7 +14,7 @@ public class ModifyPatientRequest {
     private String phone;
     private String gender;
     private String birthday;
-    private boolean smoker;
+    private int smoker;
     private double height;
     private double weight;
     private String medical_history;

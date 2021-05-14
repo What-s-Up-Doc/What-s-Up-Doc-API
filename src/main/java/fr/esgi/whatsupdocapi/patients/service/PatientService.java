@@ -18,7 +18,7 @@ public class PatientService {
 
     public int addPatient(String firstname, String lastname, String email,
                           String password, String phone, String gender, String birthday,
-                          boolean isSmoker, double height, double weight,
+                          int isSmoker, double height, double weight,
                           String medical_history, String family_medical_history, String traitement) {
         var patientId = patientRepository.store(firstname,
                 lastname, email, password, phone, gender,
@@ -42,7 +42,7 @@ public class PatientService {
 
     public void modify(int id, String firstname, String lastname, String email,
                        String password, String phone, String gender, String birthday,
-                       boolean isSmoker, double height, double weight,
+                       int isSmoker, double height, double weight,
                        String medical_history, String family_medical_history, String traitement) {
         patientRepository.modify(id, firstname, lastname, email, password, phone,
                 gender, birthday, isSmoker, height, weight, medical_history,

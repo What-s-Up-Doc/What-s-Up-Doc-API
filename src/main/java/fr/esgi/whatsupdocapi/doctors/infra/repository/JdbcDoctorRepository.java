@@ -40,9 +40,11 @@ public class JdbcDoctorRepository implements DoctorRepository {
 
     @Override
     public Optional<Doctor> findOne(int doctorId) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from doctor where id = ?", mapper, new Object[]{ doctorId })
-        );
+        List<Doctor> doctors = jdbcTemplate.query("select * from doctor where id = ?", mapper, new Object[]{ doctorId });
+        if(doctors.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.of(doctors.get(0));
     }
 
     public Doctor findOneFromEmail(String email) {

@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ModifyPatientRequest {
-    private String id;
+    private int id;
     private String firstname;
     private String lastname;
     private String email;
@@ -14,10 +14,10 @@ public class ModifyPatientRequest {
     private String phone;
     private String gender;
     private String birthday;
-    private boolean smoker;
+    private int smoker;
     private double height;
     private double weight;
     private String medical_history;
     private String family_medical_history;
-    private String traitement;
+    private String treatment;
 }

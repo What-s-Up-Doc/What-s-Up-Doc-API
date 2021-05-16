@@ -10,13 +10,14 @@ public class CreatePatientRequest {
     private String lastname;
     private String email;
     private String password;
+    private String confirmedPassword;
     private String phone;
     private String gender;
     private String birthday;
-    private boolean smoker;
+    private int smoker;
     private double height;
     private double weight;
     private String medical_history;
     private String family_medical_history;
-    private String traitement;
+    private String treatment;
 }

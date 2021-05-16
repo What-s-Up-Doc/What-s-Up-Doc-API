@@ -1,6 +1,6 @@
 package fr.esgi.whatsupdocapi.doctors.model;
 
-import fr.esgi.whatsupdocapi.core.User;
+import fr.esgi.whatsupdocapi.core.model.User;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

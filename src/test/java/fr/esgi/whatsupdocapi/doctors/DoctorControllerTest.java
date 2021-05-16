@@ -38,14 +38,14 @@ public class DoctorControllerTest {
 
     @Test
     public void ShouldCallFindDoctor()throws Exception {
-        String doctorId = "1";
+        int doctorId = 1;
         doctorController.findById(doctorId);
         verify(doctorService, times(1)).findOne(doctorId);
     }
 
     @Test
     public void shouldCallDeleteDoctor()throws Exception{
-        String doctorId = "1";
+        int doctorId = 1;
         doctorController.deleteDoctor(doctorId);
         verify(doctorService, times(1)).deleteOne(doctorId);
     }
@@ -53,12 +53,12 @@ public class DoctorControllerTest {
     @Test
     public void shouldCallCreateDoctor()throws Exception{
         CreateDoctorRequest request = new CreateDoctorRequest("firstname", "lastname",
-                "email", "password", "phone", "female", "speciality");
+                "email", "password", "password", "phone", "female", "speciality");
 
         MockHttpServletRequest requestHttp = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(requestHttp));
 
-        when(doctorService.addDoctor(any(), any(), any(), any(), any(), any(), any())).thenReturn("1");
+        when(doctorService.addDoctor(any(), any(), any(), any(), any(), any(), any())).thenReturn(1);
 
         doctorController.createDoctor(request);
         verify(doctorService, times(1)).addDoctor(request.getFirstname(),
@@ -68,7 +68,7 @@ public class DoctorControllerTest {
 
     @Test
     public void shouldCallModifyDoctor()throws Exception{
-        ModifyDoctorRequest request = new ModifyDoctorRequest("1", "firstname", "lastname",
+        ModifyDoctorRequest request = new ModifyDoctorRequest(1, "firstname", "lastname",
                 "ChangeEmail", "ChangePassword", "ChangePhone", "female", "speciality");
 
         doctorController.modifyDoctor(request);

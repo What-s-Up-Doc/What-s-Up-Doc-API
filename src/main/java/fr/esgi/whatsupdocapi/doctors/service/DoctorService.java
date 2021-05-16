@@ -1,7 +1,8 @@
 package fr.esgi.whatsupdocapi.doctors.service;
 
+import fr.esgi.whatsupdocapi.doctors.infra.repository.JdbcDoctorRepository;
+import fr.esgi.whatsupdocapi.doctors.infra.web.exception.DoctorNotFoundException;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
-import fr.esgi.whatsupdocapi.doctors.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DoctorService {
 
-    private final DoctorRepository doctorRepository;
+    private final JdbcDoctorRepository doctorRepository;
 
-    public String addDoctor(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+    public int addDoctor(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         var doctorId = doctorRepository.store(firstname, lastname, email, password, phone, gender, speciality);
         log.info("Stored {}", lastname);
         return doctorId;
@@ -27,17 +28,22 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public Optional<Doctor> findOne(String doctorId) {
+    public Optional<Doctor> findOne(int doctorId) {
         return doctorRepository.findOne(doctorId);
     }
 
-    public void deleteOne(String doctorId) {
+    public void deleteOne(int doctorId) {
+        doctorRepository.findOne(doctorId).orElseThrow(() ->    {
+            throw new DoctorNotFoundException("No doctors for this id");
+        });
         doctorRepository.deleteOne(doctorId);
     }
 
-    public void modify(String id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
+    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
         doctorRepository.modify(id, firstname, lastname, email, password, phone, gender, speciality);
     }
 
-
+    public Doctor findDoctorByEmail(String email){
+        return doctorRepository.findOneFromEmail(email);
+    }
 }

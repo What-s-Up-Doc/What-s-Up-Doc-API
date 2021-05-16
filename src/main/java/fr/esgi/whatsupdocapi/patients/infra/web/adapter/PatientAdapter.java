@@ -15,16 +15,15 @@ class PatientAdapter {
                 .setFirstname(patient.getFirstname())
                 .setLastname(patient.getLastname())
                 .setEmail(patient.getEmail())
-                .setPassword(patient.getPassword())
                 .setPhone(patient.getPhone())
                 .setGender(patient.getGender())
                 .setBirthday(patient.getBirthday())
-                .setSmoker(patient.isSmoker())
+                .setSmoker(patient.getSmoker())
                 .setHeight(patient.getHeight())
                 .setWeight(patient.getWeight())
                 .setMedical_history(patient.getMedical_history())
-                .setFamily_medical_history(patient.getFamily_medical_history());
-
+                .setFamily_medical_history(patient.getFamily_medical_history())
+                .setTreatment(patient.getTreatment());
     }
 
     public PatientMinimalResponse mapMinimalResponse(Patient patient) {

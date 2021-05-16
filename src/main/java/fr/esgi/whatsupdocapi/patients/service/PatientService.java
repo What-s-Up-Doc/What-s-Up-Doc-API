@@ -1,7 +1,8 @@
 package fr.esgi.whatsupdocapi.patients.service;
 
+import fr.esgi.whatsupdocapi.patients.infra.repository.JdbcPatientRepository;
+import fr.esgi.whatsupdocapi.patients.infra.web.exception.PatientNotFoundException;
 import fr.esgi.whatsupdocapi.patients.model.Patient;
-import fr.esgi.whatsupdocapi.patients.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PatientService {
 
-    private final PatientRepository patientRepository;
+    private final JdbcPatientRepository patientRepository;
 
     public int addPatient(String firstname, String lastname, String email,
-                             String password, String phone, String gender, String birthday,
-                             boolean isSmoker, double height, double weight,
-                             String medical_history, String family_medical_history, String traitement) {
+                          String password, String phone, String gender, String birthday,
+                          int isSmoker, double height, double weight,
+                          String medical_history, String family_medical_history, String traitement) {
         var patientId = patientRepository.store(firstname,
                 lastname, email, password, phone, gender,
                 birthday, isSmoker, height, weight, medical_history,
@@ -37,15 +38,22 @@ public class PatientService {
     }
 
     public void deleteOne(int patientId) {
+        patientRepository.findOne(patientId).orElseThrow(() -> {
+           throw new PatientNotFoundException("No patient founded for this id");
+        });
         patientRepository.deleteOne(patientId);
     }
 
     public void modify(int id, String firstname, String lastname, String email,
                        String password, String phone, String gender, String birthday,
-                       boolean isSmoker, double height, double weight,
+                       int isSmoker, double height, double weight,
                        String medical_history, String family_medical_history, String traitement) {
         patientRepository.modify(id, firstname, lastname, email, password, phone,
                 gender, birthday, isSmoker, height, weight, medical_history,
                 family_medical_history, traitement);
+    }
+
+    public Patient findPatientByEmail(String email) {
+        return patientRepository.findOneFromEmail(email);
     }
 }

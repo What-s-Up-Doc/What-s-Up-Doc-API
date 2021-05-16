@@ -1,10 +1,10 @@
 package fr.esgi.whatsupdocapi.patients.infra.repository;
 
-import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.patients.model.Patient;
-import fr.esgi.whatsupdocapi.patients.repository.PatientRepository;
+import fr.esgi.whatsupdocapi.patients.model.PatientRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,15 +16,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JdbcPatientRepository implements PatientRepository {
 
+    @Autowired
     private final JdbcTemplate jdbcTemplate;
     private final PatientRowMapper mapper;
 
     @Override
-    public int store(String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
-        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, traitement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                null, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, traitement);
-        int id = findOneFromEmail(email).get().getId();
-        return id;
+    public int store(String firstname, String lastname, String email, String password, String phone, String gender, String birthday, int smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
+        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment);
+        return findOneFromEmail(email).getId();
     }
 
     @Override
@@ -32,10 +32,10 @@ public class JdbcPatientRepository implements PatientRepository {
         return jdbcTemplate.queryForObject("select count(*) from patient", Integer.class);
     }
 
-    public Optional<Patient> findOneFromEmail(String email) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from doctor where email = ?", mapper, new Object[]{ email })
-        );
+    public Patient findOneFromEmail(String email) {
+        List<Patient> patients = jdbcTemplate.query("select * from patient where email = ?", mapper, new Object[]{email});
+        if (patients.isEmpty()) return null;
+        return patients.get(0);
     }
 
     @Override
@@ -45,9 +45,11 @@ public class JdbcPatientRepository implements PatientRepository {
 
     @Override
     public Optional<Patient> findOne(int patientId) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from patient where id = ?", mapper, new Object[]{ patientId })
-        );
+        List<Patient> patients = jdbcTemplate.query("select * from patient where id = ?", mapper, new Object[]{patientId});
+        if (patients.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.of(patients.get(0));
     }
 
     @Override
@@ -57,9 +59,9 @@ public class JdbcPatientRepository implements PatientRepository {
     }
 
     @Override
-    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, boolean smoker, double height, double weight, String medical_history, String family_medical_history, String traitement) {
-        String SQL = "Update patient set firstname = ?, lastname = ?, email = ?, password = ?, phone = ?, gender = ?, speciality = ?, birthday = ?, smoker = ?, height = ?, weight = ?, medical_history = ?, family_medical_history = ?, traitement = ? where id = ?";
-        jdbcTemplate.update(SQL, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, traitement, id);
+    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String birthday, int smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
+        String SQL = "Update patient set firstname = ?, lastname = ?, email = ?, password = ?, phone = ?, gender = ?, birthday = ?, smoker = ?, height = ?, weight = ?, medical_history = ?, family_medical_history = ?, treatment = ? where id = ?";
+        jdbcTemplate.update(SQL, firstname, lastname, email, password, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment, id);
     }
 
 }

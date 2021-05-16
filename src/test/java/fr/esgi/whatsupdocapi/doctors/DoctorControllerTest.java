@@ -53,7 +53,7 @@ public class DoctorControllerTest {
     @Test
     public void shouldCallCreateDoctor()throws Exception{
         CreateDoctorRequest request = new CreateDoctorRequest("firstname", "lastname",
-                "email", "password", "phone", "female", "speciality");
+                "email", "password", "password", "phone", "female", "speciality");
 
         MockHttpServletRequest requestHttp = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(requestHttp));

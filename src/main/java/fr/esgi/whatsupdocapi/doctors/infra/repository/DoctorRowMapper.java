@@ -14,6 +14,7 @@ class DoctorRowMapper implements RowMapper<Doctor> {
     public Doctor mapRow(ResultSet rs, int rowNum) throws SQLException {
         Doctor doctor = new Doctor();
         doctor.setId(rs.getInt("id"));
+        doctor.setFirstname(rs.getString("firstname"));
         doctor.setLastname(rs.getString("lastname"));
         doctor.setEmail(rs.getString("email"));
         doctor.setPassword(rs.getString("password"));

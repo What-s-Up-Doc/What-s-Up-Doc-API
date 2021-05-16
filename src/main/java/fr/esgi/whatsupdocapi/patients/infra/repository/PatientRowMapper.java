@@ -22,8 +22,8 @@ class PatientRowMapper implements RowMapper<Patient> {
         patient.setGender(rs.getString("gender"));
         patient.setBirthday(rs.getString("birthday"));
         patient.setSmoker(rs.getInt("smoker"));
-        patient.setHeight(rs.getInt("height"));
-        patient.setWeight(rs.getInt("weight"));
+        patient.setHeight(rs.getDouble("height"));
+        patient.setWeight(rs.getDouble("weight"));
         patient.setMedical_history(rs.getString("medical_history"));
         patient.setFamily_medical_history(rs.getString("family_medical_history"));
         patient.setTreatment(rs.getString("treatment"));

@@ -1,6 +1,7 @@
 package fr.esgi.whatsupdocapi.patients.service;
 
 import fr.esgi.whatsupdocapi.patients.infra.repository.JdbcPatientRepository;
+import fr.esgi.whatsupdocapi.patients.infra.web.exception.PatientNotFoundException;
 import fr.esgi.whatsupdocapi.patients.model.Patient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,9 @@ public class PatientService {
     }
 
     public void deleteOne(int patientId) {
+        patientRepository.findOne(patientId).orElseThrow(() -> {
+           throw new PatientNotFoundException("No patient founded for this id");
+        });
         patientRepository.deleteOne(patientId);
     }
 

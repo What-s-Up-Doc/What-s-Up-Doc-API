@@ -62,14 +62,17 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<DoctorIdResponse> createDoctor(@RequestBody CreateDoctorRequest request) {
+        int doctorId = 0;
 
-        int doctorId;
         DoctorControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword());
-
         DoctorControllerHelper.verifyUniqueEmailInRepository(request.getEmail(), doctorService.findDoctorByEmail(request.getEmail()));
 
-        doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
+        try {
+            doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
+        } catch (Exception e) {
+            throw new IllegalArgumentsException("Illegal arguments for doctor creation");
+        }
 
         DoctorIdResponse doctorIdResponse = new DoctorIdResponse();
         doctorIdResponse.setId(doctorId);

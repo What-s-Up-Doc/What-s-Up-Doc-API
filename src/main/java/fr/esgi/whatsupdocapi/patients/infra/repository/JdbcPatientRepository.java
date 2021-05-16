@@ -45,9 +45,11 @@ public class JdbcPatientRepository implements PatientRepository {
 
     @Override
     public Optional<Patient> findOne(int patientId) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from patient where id = ?", mapper, new Object[]{patientId})
-        );
+        List<Patient> patients = jdbcTemplate.query("select * from patient where id = ?", mapper, new Object[]{patientId});
+        if (patients.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.of(patients.get(0));
     }
 
     @Override

@@ -12,9 +12,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Patient extends User {
     private String birthday;
-    private int smoker;
-    private double height;
-    private double weight;
+    private Integer smoker;
+    private Double height;
+    private Double weight;
     private String medical_history;
     private String family_medical_history;
     private String treatment;
@@ -29,5 +29,22 @@ public class Patient extends User {
         this.medical_history = medical_history;
         this.family_medical_history = family_medical_history;
         this.treatment = treatment;
+    }
+
+    public boolean isValid() {
+        return this.getId() != null &&
+                this.getFirstname() != null &&
+                this.getLastname() != null &&
+                this.getEmail() != null &&
+                this.getPassword() != null &&
+                this.getPhone() != null &&
+                this.getGender() != null &&
+                this.birthday != null &&
+                this.smoker != null &&
+                this.weight != null &&
+                this.height != null &&
+                this.medical_history != null &&
+                this.family_medical_history != null &&
+                this.treatment != null;
     }
 }

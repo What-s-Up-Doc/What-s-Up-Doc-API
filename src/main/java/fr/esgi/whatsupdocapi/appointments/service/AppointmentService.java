@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,4 +26,13 @@ public class AppointmentService {
             throw new BadRequestException("Failed to store your appointment");
         }).getId();
     }
+
+    public List<Appointment> getDoctorsAppointment(Integer id) {
+        return appointmentRepository.findAppointmentsForDoctor(id);
+    }
+
+    public List<Appointment> getPatientAppointment(Integer id) {
+        return appointmentRepository.findAppointmentsForPatient(id);
+    }
+
 }

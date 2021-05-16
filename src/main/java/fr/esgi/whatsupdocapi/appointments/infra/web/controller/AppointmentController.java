@@ -1,23 +1,21 @@
 package fr.esgi.whatsupdocapi.appointments.infra.web.controller;
 
 import fr.esgi.whatsupdocapi.appointments.infra.web.request.CreateAppointmentRequest;
+import fr.esgi.whatsupdocapi.appointments.infra.web.request.GetMyAppointmentsRequest;
 import fr.esgi.whatsupdocapi.appointments.infra.web.response.AppointmentIdResponse;
+import fr.esgi.whatsupdocapi.appointments.model.Appointment;
 import fr.esgi.whatsupdocapi.appointments.service.AppointmentService;
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @RequiredArgsConstructor
@@ -39,10 +37,23 @@ public class AppointmentController {
         } catch (Exception e) {
             throw new BadRequestException("Please check your request");
         }
-
-
     }
 
+    @GetMapping
+    public ResponseEntity<List<Appointment>> getMyAppointments(
+            @RequestBody GetMyAppointmentsRequest request
+            ) {
+        List<Appointment> result;
+        if (request.getDoctorId() != null) {
+            result = appointmentService.getDoctorsAppointment(request.getDoctorId());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else if (request.getPatientId() != null ) {
+            result = appointmentService.getPatientAppointment(request.getPatientId());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+
+        throw new BadRequestException("Please define a doctorId or patientId");
+    }
 
 
 

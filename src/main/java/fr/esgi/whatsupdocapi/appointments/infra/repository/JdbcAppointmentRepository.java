@@ -23,7 +23,7 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
 
     @Override
     public List<Appointment> findAppointmentsForDoctor(Integer doctorsId) {
-        return null;
+        return jdbcTemplate.query("SELECT * FROM appointment WHERE id_doctor = ?", rowMapper, doctorsId);
     }
 
     @Override

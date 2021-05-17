@@ -2,6 +2,7 @@ package fr.esgi.whatsupdocapi.doctors;
 
 import fr.esgi.whatsupdocapi.doctors.infra.web.adapter.DoctorAdapter;
 import fr.esgi.whatsupdocapi.doctors.infra.web.controller.DoctorController;
+import fr.esgi.whatsupdocapi.doctors.infra.web.exception.DoctorNotFoundException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.CreateDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.ModifyDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.service.DoctorService;
@@ -36,7 +37,7 @@ public class DoctorControllerTest {
         verify(doctorService, times(1)).findAll();
     }
 
-    @Test
+    @Test(expected = DoctorNotFoundException.class)
     public void ShouldCallFindDoctor()throws Exception {
         int doctorId = 1;
         doctorController.findById(doctorId);

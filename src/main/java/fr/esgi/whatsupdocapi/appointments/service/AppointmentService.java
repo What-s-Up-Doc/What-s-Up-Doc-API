@@ -41,4 +41,11 @@ public class AppointmentService {
         return appointmentRepository.findAppointmentById(appointmentId);
     }
 
+    public void deleteOne(Integer appointmentId) {
+        this.findOne(appointmentId).orElseThrow(() -> {
+            throw new NotFoundException(String.format("There is no appointment for the id : %d", appointmentId));
+        });
+        appointmentRepository.deleteById(appointmentId);
+    }
+
 }

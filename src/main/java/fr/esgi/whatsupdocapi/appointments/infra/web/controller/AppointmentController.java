@@ -86,6 +86,10 @@ public class AppointmentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteAppointment(@PathVariable("id") Integer appointmentId) {
+        appointmentService.deleteOne(appointmentId);
+    }
 
 
 }

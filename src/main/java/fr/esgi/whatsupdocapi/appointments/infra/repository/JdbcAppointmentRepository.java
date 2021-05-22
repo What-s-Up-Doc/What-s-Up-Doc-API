@@ -48,7 +48,7 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
 
     @Override
     public void deleteById(Integer appointmentId) {
-
+        jdbcTemplate.update("DELETE FROM appointment WHERE id = ?", appointmentId);
     }
 
     @Override

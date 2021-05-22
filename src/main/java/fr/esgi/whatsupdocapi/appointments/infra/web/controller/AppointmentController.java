@@ -40,8 +40,8 @@ public class AppointmentController {
 
         try {
             Integer createdAppointmentId = appointmentService.createAppointment(
-                            request.getId_doctor(),
-                            request.getId_patient(),
+                            request.getIdDoctor(),
+                            request.getIdPatient(),
                             LocalDateTime.parse(request.getDate(), formatter),
                             request.getStatus());
 

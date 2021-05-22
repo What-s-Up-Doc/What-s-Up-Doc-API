@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class AppointmentDetailResponse extends RepresentationModel<AppointmentDetailResponse> {
+    private Integer id;
     private Integer doctorId;
     private Integer patientId;
     private LocalDateTime dateTime;

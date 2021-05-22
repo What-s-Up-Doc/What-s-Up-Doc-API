@@ -9,6 +9,7 @@ public class AppointmentAdapter {
 
     public AppointmentDetailResponse map(Appointment appointment){
         return AppointmentDetailResponse.builder()
+                .id(appointment.getId())
                 .doctorId(appointment.getId_doctor())
                 .patientId(appointment.getId_patient())
                 .dateTime(appointment.getDate())

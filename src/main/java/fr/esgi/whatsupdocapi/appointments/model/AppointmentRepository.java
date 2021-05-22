@@ -11,6 +11,8 @@ public interface AppointmentRepository {
 
     Optional<Appointment> createAppointment(Appointment appointment);
 
+    Optional<Appointment> findAppointmentById(Integer appointmentId);
+
     void deleteById(Integer appointmentId);
 
     void modifyAppointment(Appointment appointment);

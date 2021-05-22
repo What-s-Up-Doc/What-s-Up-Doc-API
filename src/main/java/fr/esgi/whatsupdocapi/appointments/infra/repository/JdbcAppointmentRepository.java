@@ -37,6 +37,16 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
     }
 
     @Override
+    public Optional<Appointment> findAppointmentById(Integer appointmentId) {
+        List<Appointment> appointments = jdbcTemplate.query("SELECT * FROM appointment WHERE id = ?", rowMapper, appointmentId);
+
+        if(appointments.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(appointments.get(0));
+    }
+
+    @Override
     public void deleteById(Integer appointmentId) {
 
     }

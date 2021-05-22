@@ -3,11 +3,13 @@ package fr.esgi.whatsupdocapi.appointments.service;
 import fr.esgi.whatsupdocapi.appointments.model.Appointment;
 import fr.esgi.whatsupdocapi.appointments.model.AppointmentRepository;
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
+import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,10 @@ public class AppointmentService {
 
     public List<Appointment> getPatientAppointment(Integer id) {
         return appointmentRepository.findAppointmentsForPatient(id);
+    }
+
+    public Optional<Appointment> findOne(Integer appointmentId) {
+        return appointmentRepository.findAppointmentById(appointmentId);
     }
 
 }

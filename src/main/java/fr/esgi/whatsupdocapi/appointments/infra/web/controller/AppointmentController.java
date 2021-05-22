@@ -1,21 +1,29 @@
 package fr.esgi.whatsupdocapi.appointments.infra.web.controller;
 
+import fr.esgi.whatsupdocapi.appointments.infra.web.adapter.AppointmentAdapter;
 import fr.esgi.whatsupdocapi.appointments.infra.web.request.CreateAppointmentRequest;
 import fr.esgi.whatsupdocapi.appointments.infra.web.request.GetMyAppointmentsRequest;
+import fr.esgi.whatsupdocapi.appointments.infra.web.response.AppointmentDetailResponse;
 import fr.esgi.whatsupdocapi.appointments.infra.web.response.AppointmentIdResponse;
 import fr.esgi.whatsupdocapi.appointments.model.Appointment;
 import fr.esgi.whatsupdocapi.appointments.service.AppointmentService;
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
+import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
+import fr.esgi.whatsupdocapi.doctors.infra.web.controller.DoctorController;
+import fr.esgi.whatsupdocapi.patients.infra.web.controller.PatientController;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Data
 @RequiredArgsConstructor
@@ -23,6 +31,7 @@ import java.util.List;
 @RequestMapping("/api/appointments")
 public class AppointmentController {
     private final AppointmentService appointmentService;
+    private final AppointmentAdapter appointmentAdapter;
 
     @PostMapping
     public ResponseEntity<AppointmentIdResponse> createAppointment(
@@ -53,6 +62,28 @@ public class AppointmentController {
         }
 
         throw new BadRequestException("Please define a doctorId or patientId");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AppointmentDetailResponse> findById(
+            @PathVariable("id") int appointmentID
+    ) {
+        AppointmentDetailResponse response =  appointmentService.findOne(appointmentID)
+                .map(appointmentAdapter::map)
+                .orElseThrow(() -> {
+                    throw new NotFoundException(String.format("There is no appointment for the id : %d", appointmentID));
+                });
+
+        Link linkToDoctor = linkTo(DoctorController.class)
+                .slash(response.getDoctorId())
+                .withSelfRel();
+        Link linkToPatient = linkTo(PatientController.class)
+                .slash(response.getPatientId())
+                .withSelfRel();
+
+        response.add(linkToDoctor, linkToPatient);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

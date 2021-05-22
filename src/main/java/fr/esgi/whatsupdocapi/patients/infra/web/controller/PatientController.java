@@ -1,8 +1,8 @@
 package fr.esgi.whatsupdocapi.patients.infra.web.controller;
 
+import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
+import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
 import fr.esgi.whatsupdocapi.patients.infra.web.adapter.PatientAdapter;
-import fr.esgi.whatsupdocapi.patients.infra.web.exception.IllegalArgumentsException;
-import fr.esgi.whatsupdocapi.patients.infra.web.exception.PatientNotFoundException;
 import fr.esgi.whatsupdocapi.patients.infra.web.helper.PatientControllerHelper;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.CreatePatientRequest;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.ModifyPatientRequest;
@@ -56,7 +56,7 @@ public class PatientController {
         return patientService.findOne(patientId)
                 .map(patientAdapter::map)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> {throw new PatientNotFoundException("No patient for this ID");});
+                .orElseThrow(() -> {throw new NotFoundException("No patient for this ID");});
     }
 
     @PostMapping
@@ -72,7 +72,7 @@ public class PatientController {
                     request.getBirthday(), request.getSmoker(), request.getHeight(), request.getWeight(),
                     request.getMedical_history(), request.getFamily_medical_history(), request.getTreatment());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for patient creation");
+            throw new BadRequestException("Illegal arguments for patient creation");
         }
         PatientIdResponse patientIdResponse = new PatientIdResponse();
         patientIdResponse.setId(patientId);
@@ -95,7 +95,7 @@ public class PatientController {
                     request.getMedical_history(), request.getFamily_medical_history(), request.getTreatment());
 
             if (!patient.isValid()) {
-                throw new IllegalArgumentsException("Illegal arguments for patient modification");
+                throw new BadRequestException("Illegal arguments for patient modification");
             }
 
             patientService.modify(patient.getId(), patient.getFirstname(), patient.getLastname(),
@@ -104,7 +104,7 @@ public class PatientController {
                     patient.getMedical_history(), patient.getFamily_medical_history(), patient.getTreatment());
 
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for patient modification");
+            throw new BadRequestException("Illegal arguments for patient modification");
         }
     }
 

@@ -1,8 +1,8 @@
 package fr.esgi.whatsupdocapi.patients;
 
+import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
 import fr.esgi.whatsupdocapi.patients.infra.web.adapter.PatientAdapter;
 import fr.esgi.whatsupdocapi.patients.infra.web.controller.PatientController;
-import fr.esgi.whatsupdocapi.patients.infra.web.exception.PatientNotFoundException;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.CreatePatientRequest;
 import fr.esgi.whatsupdocapi.patients.infra.web.request.ModifyPatientRequest;
 import fr.esgi.whatsupdocapi.patients.service.PatientService;
@@ -37,7 +37,7 @@ public class PatientControllerTest {
         verify(patientService, times(1)).findAll();
     }
 
-    @Test(expected = PatientNotFoundException.class)
+    @Test(expected = NotFoundException.class)
     public void ShouldCallFindPatient()throws Exception {
         int patientId = 1;
         patientController.findById(patientId);

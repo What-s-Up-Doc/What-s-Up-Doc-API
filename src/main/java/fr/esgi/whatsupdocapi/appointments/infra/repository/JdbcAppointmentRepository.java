@@ -14,6 +14,8 @@ import java.util.Optional;
 public class JdbcAppointmentRepository implements AppointmentRepository {
     private final JdbcTemplate jdbcTemplate;
     private final AppointmentRowMapper rowMapper;
+    private final CreatedAppointmentRowMapper createdAppointmentRowMapper;
+
 
 
     @Override
@@ -28,12 +30,8 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
 
     @Override
     public Optional<Appointment> createAppointment(Appointment appointment) {
-        int res = jdbcTemplate.update("INSERT INTO appointment (id_doctor, id_patient, date, status) VALUES (?, ?, ?, ?)",
-                appointment.getId_doctor(), appointment.getId_patient(), appointment.getDate(), appointment.getStatus());
-        if (res != 1) {
-            return Optional.empty();
-        }
-        return Optional.of(appointment);
+        int res = jdbcTemplate.queryForObject("INSERT INTO appointment (id_doctor, id_patient, date, status) VALUES (?, ?, ?, ?) RETURNING id", createdAppointmentRowMapper, appointment.getId_doctor(), appointment.getId_patient(), appointment.getDate(), appointment.getStatus());
+        return this.findAppointmentById(res);
     }
 
     @Override

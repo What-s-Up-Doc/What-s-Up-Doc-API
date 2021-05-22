@@ -23,13 +23,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Data
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentController {
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
     private final AppointmentService appointmentService;
     private final AppointmentAdapter appointmentAdapter;
 
@@ -37,12 +37,22 @@ public class AppointmentController {
     public ResponseEntity<AppointmentIdResponse> createAppointment(
             @RequestBody CreateAppointmentRequest request
             ) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
 
         try {
-            appointmentService.createAppointment(request.getId_doctor(), request.getId_patient(),
-                            LocalDateTime.parse(request.getDate(), formatter), request.getStatus());
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            Integer createdAppointmentId = appointmentService.createAppointment(
+                            request.getId_doctor(),
+                            request.getId_patient(),
+                            LocalDateTime.parse(request.getDate(), formatter),
+                            request.getStatus());
+
+            AppointmentIdResponse response = AppointmentIdResponse.builder()
+                    .appointment_id(createdAppointmentId)
+                    .build()
+                    .add(linkTo(AppointmentController.class)
+                            .slash(createdAppointmentId)
+                            .withSelfRel());
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new BadRequestException("Please check your request");
         }

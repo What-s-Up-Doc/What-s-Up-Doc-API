@@ -25,8 +25,8 @@ public class AppointmentService {
                 .build();
 
         return appointmentRepository.createAppointment(appointment).orElseThrow(() -> {
-            throw new BadRequestException("Failed to store your appointment");
-        }).getId();
+          throw new BadRequestException("Failed to store your appointment");
+      }).getId();
     }
 
     public List<Appointment> getDoctorsAppointment(Integer id) {

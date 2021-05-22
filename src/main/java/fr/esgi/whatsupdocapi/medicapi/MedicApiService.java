@@ -2,7 +2,6 @@ package fr.esgi.whatsupdocapi.medicapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.esgi.whatsupdocapi.medicapi.model.*;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -22,15 +21,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MedicApiService {
     @Value("${external.api.url}")
-    private static String mainURL;
+    private String mainURL;
 
     @Value("${external.api.key}")
-    private static String KEY;
+    private String KEY;
 
     @Value("${external.api.language}")
-    private static String LANGUAGE;
+    private String LANGUAGE;
 
     private ResponseBody getResponse(String urlSuffix, MedicRequest request) throws IOException, URISyntaxException {
+        log.info(mainURL);
         URL url = request.buildUrl(mainURL + urlSuffix);
 
         OkHttpClient client = new OkHttpClient();

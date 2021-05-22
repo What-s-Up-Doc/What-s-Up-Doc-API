@@ -1,7 +1,7 @@
 package fr.esgi.whatsupdocapi.doctors.service;
 
+import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
 import fr.esgi.whatsupdocapi.doctors.infra.repository.JdbcDoctorRepository;
-import fr.esgi.whatsupdocapi.doctors.infra.web.exception.DoctorNotFoundException;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class DoctorService {
 
     public void deleteOne(int doctorId) {
         doctorRepository.findOne(doctorId).orElseThrow(() ->    {
-            throw new DoctorNotFoundException("No doctors for this id");
+            throw new NotFoundException("No doctors for this id");
         });
         doctorRepository.deleteOne(doctorId);
     }

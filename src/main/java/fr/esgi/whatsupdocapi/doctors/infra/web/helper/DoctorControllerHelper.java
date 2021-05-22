@@ -1,23 +1,22 @@
 package fr.esgi.whatsupdocapi.doctors.infra.web.helper;
 
-import fr.esgi.whatsupdocapi.doctors.infra.web.exception.EmailAlreadyUsedException;
-import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalArgumentsException;
-import fr.esgi.whatsupdocapi.doctors.infra.web.exception.PasswordsDontMatchException;
+import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
+import fr.esgi.whatsupdocapi.core.exceptions.ConflictException;
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 
 import java.util.Objects;
 
 public class DoctorControllerHelper {
 
-    public static void verifyPasswordValidity(String password, String confirmedPassword) throws PasswordsDontMatchException{
+    public static void verifyPasswordValidity(String password, String confirmedPassword) throws BadRequestException {
         if(!password.equals(confirmedPassword)){
-            throw new PasswordsDontMatchException("The confirmed password doesn't match the password.");
+            throw new BadRequestException("The confirmed password doesn't match the password.");
         }
     }
 
-    public static void verifyUniqueEmailInRepository(String email, Doctor doctor) throws EmailAlreadyUsedException {
+    public static void verifyUniqueEmailInRepository(String email, Doctor doctor) throws ConflictException {
         if(Objects.nonNull(doctor)){
-            throw new EmailAlreadyUsedException("A user with this email address has already been created.");
+            throw new ConflictException("A user with this email address has already been created.");
         }
     }
 

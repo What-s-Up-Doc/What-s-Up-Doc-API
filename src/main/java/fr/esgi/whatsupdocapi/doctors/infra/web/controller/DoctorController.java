@@ -1,8 +1,8 @@
 package fr.esgi.whatsupdocapi.doctors.infra.web.controller;
 
+import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
+import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.adapter.DoctorAdapter;
-import fr.esgi.whatsupdocapi.doctors.infra.web.exception.DoctorNotFoundException;
-import fr.esgi.whatsupdocapi.doctors.infra.web.exception.IllegalArgumentsException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.helper.DoctorControllerHelper;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.CreateDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.ModifyDoctorRequest;
@@ -57,7 +57,7 @@ public class DoctorController {
         return doctorService.findOne(doctorId)
                 .map(doctorAdapter::map)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> {throw new DoctorNotFoundException("No doctors for this id");});
+                .orElseThrow(() -> {throw new NotFoundException("No doctors for this id");});
     }
 
     @PostMapping
@@ -71,7 +71,7 @@ public class DoctorController {
             doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
                     request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for doctor creation");
+            throw new BadRequestException("Illegal arguments for doctor creation");
         }
 
         DoctorIdResponse doctorIdResponse = new DoctorIdResponse();
@@ -95,7 +95,7 @@ public class DoctorController {
             doctorService.modify(doctor.getId(), doctor.getFirstname(), doctor.getLastname(), doctor.getEmail(),
                     doctor.getPassword(), doctor.getPhone(), doctor.getGender(), doctor.getSpeciality());
         } catch (Exception e) {
-            throw new IllegalArgumentsException("Illegal arguments for doctor modification");
+            throw new BadRequestException("Illegal arguments for doctor modification");
         }
 
     }

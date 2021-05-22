@@ -15,6 +15,6 @@ public interface AppointmentRepository {
 
     void deleteById(Integer appointmentId);
 
-    void modifyAppointment(Appointment appointment);
+    Optional<Appointment> modifyAppointment(Appointment appointment);
 
 }

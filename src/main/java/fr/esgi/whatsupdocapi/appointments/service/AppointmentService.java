@@ -29,6 +29,20 @@ public class AppointmentService {
       }).getId();
     }
 
+    public Integer modifyAppointment(Integer id, Integer doctorId, Integer patientId, LocalDateTime date, String status) {
+        Appointment appointment = Appointment.builder()
+                .id(id)
+                .id_doctor(doctorId)
+                .id_patient(patientId)
+                .date(date)
+                .status(status)
+                .build();
+
+        return appointmentRepository.modifyAppointment(appointment).orElseThrow(() -> {
+            throw new BadRequestException("Failed to update your appointment");
+        }).getId();
+    }
+
     public List<Appointment> getDoctorsAppointment(Integer id) {
         return appointmentRepository.findAppointmentsForDoctor(id);
     }

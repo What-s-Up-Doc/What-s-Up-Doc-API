@@ -50,7 +50,9 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
     }
 
     @Override
-    public void modifyAppointment(Appointment appointment) {
-
+    public Optional<Appointment> modifyAppointment(Appointment appointment) {
+        jdbcTemplate.update("UPDATE appointment SET id_doctor = ?, id_patient = ?, date = ?, status = ? WHERE id = ?",
+                appointment.getId_doctor(), appointment.getId_patient(), appointment.getDate(), appointment.getStatus(), appointment.getId());
+        return this.findAppointmentById(appointment.getId());
     }
 }

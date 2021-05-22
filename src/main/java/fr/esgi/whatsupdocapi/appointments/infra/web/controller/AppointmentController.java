@@ -3,6 +3,7 @@ package fr.esgi.whatsupdocapi.appointments.infra.web.controller;
 import fr.esgi.whatsupdocapi.appointments.infra.web.adapter.AppointmentAdapter;
 import fr.esgi.whatsupdocapi.appointments.infra.web.request.CreateAppointmentRequest;
 import fr.esgi.whatsupdocapi.appointments.infra.web.request.GetMyAppointmentsRequest;
+import fr.esgi.whatsupdocapi.appointments.infra.web.request.ModifyAppointmentRequest;
 import fr.esgi.whatsupdocapi.appointments.infra.web.response.AppointmentDetailResponse;
 import fr.esgi.whatsupdocapi.appointments.infra.web.response.AppointmentIdResponse;
 import fr.esgi.whatsupdocapi.appointments.model.Appointment;
@@ -13,6 +14,7 @@ import fr.esgi.whatsupdocapi.doctors.infra.web.controller.DoctorController;
 import fr.esgi.whatsupdocapi.patients.infra.web.controller.PatientController;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,17 +47,29 @@ public class AppointmentController {
                             LocalDateTime.parse(request.getDate(), formatter),
                             request.getStatus());
 
-            AppointmentIdResponse response = AppointmentIdResponse.builder()
-                    .appointment_id(createdAppointmentId)
-                    .build()
-                    .add(linkTo(AppointmentController.class)
-                            .slash(createdAppointmentId)
-                            .withSelfRel());
+            AppointmentIdResponse response = getAppointmentIdResponse(createdAppointmentId);
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new BadRequestException("Please check your request");
         }
+    }
+
+    @PutMapping
+    public ResponseEntity<AppointmentIdResponse> modifyAppointment(
+            @RequestBody ModifyAppointmentRequest request
+            ) {
+        request.isValid();
+        Integer appointmentId = appointmentService.modifyAppointment(
+                request.getId(),
+                request.getIdDoctor(),
+                request.getIdPatient(),
+                LocalDateTime.parse(request.getDate(), formatter),
+                request.getStatus());
+
+        AppointmentIdResponse response = getAppointmentIdResponse(appointmentId);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping
@@ -101,6 +115,13 @@ public class AppointmentController {
         appointmentService.deleteOne(appointmentId);
     }
 
-
+    @NotNull
+    private AppointmentIdResponse getAppointmentIdResponse(Integer createdAppointmentId) {
+        return AppointmentIdResponse.builder()
+                .appointment_id(createdAppointmentId)
+                .build()
+                .add(linkTo(AppointmentController.class)
+                        .slash(createdAppointmentId)
+                        .withSelfRel());
+    }
 }
-

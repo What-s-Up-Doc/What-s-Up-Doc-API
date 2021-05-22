@@ -1,4 +1,4 @@
-package fr.esgi.whatsupdocapi.core;
+package fr.esgi.whatsupdocapi.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

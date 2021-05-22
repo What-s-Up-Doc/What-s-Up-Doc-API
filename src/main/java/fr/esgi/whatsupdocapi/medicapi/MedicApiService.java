@@ -2,13 +2,13 @@ package fr.esgi.whatsupdocapi.medicapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.esgi.whatsupdocapi.medicapi.model.*;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,12 +20,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MedicApiService {
-    private static final Dotenv dotenv = Dotenv.load();
-    private static final String mainURL = dotenv.get("EXTERNAL_API_URL");
-    private static final String KEY = dotenv.get("EXTERNAL_API_KEY");
-    private static final String LANGUAGE = dotenv.get("EXTERNAL_API_LANGUAGE");
+    @Value("${external.api.url}")
+    private String mainURL;
+
+    @Value("${external.api.key}")
+    private String KEY;
+
+    @Value("${external.api.language}")
+    private String LANGUAGE;
 
     private ResponseBody getResponse(String urlSuffix, MedicRequest request) throws IOException, URISyntaxException {
+        log.info(mainURL);
         URL url = request.buildUrl(mainURL + urlSuffix);
 
         OkHttpClient client = new OkHttpClient();

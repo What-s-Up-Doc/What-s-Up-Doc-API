@@ -1,6 +1,6 @@
 package fr.esgi.whatsupdocapi.patients.model;
 
-import fr.esgi.whatsupdocapi.core.User;
+import fr.esgi.whatsupdocapi.core.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,12 +1,12 @@
-package fr.esgi.whatsupdocapi.security.user.account.controller;
+package fr.esgi.whatsupdocapi.security.user.controller;
 
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
-import fr.esgi.whatsupdocapi.security.user.account.request.CreateAccountDoctorRequest;
-import fr.esgi.whatsupdocapi.security.user.account.request.CreateAccountPatientRequest;
-import fr.esgi.whatsupdocapi.security.user.account.request.ModifyAccountDoctorRequest;
-import fr.esgi.whatsupdocapi.security.user.account.request.ModifyAccountPatientRequest;
-import fr.esgi.whatsupdocapi.security.user.account.response.AccountIdResponse;
-import fr.esgi.whatsupdocapi.security.user.account.service.AccountService;
+import fr.esgi.whatsupdocapi.security.user.request.CreateAccountDoctorRequest;
+import fr.esgi.whatsupdocapi.security.user.request.CreateAccountPatientRequest;
+import fr.esgi.whatsupdocapi.security.user.request.ModifyAccountDoctorRequest;
+import fr.esgi.whatsupdocapi.security.user.request.ModifyAccountPatientRequest;
+import fr.esgi.whatsupdocapi.security.user.response.AccountIdResponse;
+import fr.esgi.whatsupdocapi.security.user.service.AccountService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

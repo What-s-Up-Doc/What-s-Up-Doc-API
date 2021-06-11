@@ -1,11 +1,11 @@
-package fr.esgi.whatsupdocapi.security.user.account.service;
+package fr.esgi.whatsupdocapi.security.user.service;
 
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.doctors.service.DoctorService;
 import fr.esgi.whatsupdocapi.patients.model.Patient;
 import fr.esgi.whatsupdocapi.patients.service.PatientService;
-import fr.esgi.whatsupdocapi.security.user.account.Account;
-import fr.esgi.whatsupdocapi.security.user.account.repository.JdbcAccountRepository;
+import fr.esgi.whatsupdocapi.security.user.Account;
+import fr.esgi.whatsupdocapi.security.user.repository.JdbcAccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,6 @@ public class AccountService {
     private final PatientService patientService;
 
     private final JdbcAccountRepository accountRepository;
-
 
     public int addPatient(String firstname, String lastname, String phone,
                           String gender, String birthday, int smoker, double height,

@@ -1,6 +1,6 @@
-package fr.esgi.whatsupdocapi.security.user.account.repository;
+package fr.esgi.whatsupdocapi.security.user.repository;
 
-import fr.esgi.whatsupdocapi.security.user.account.Account;
+import fr.esgi.whatsupdocapi.security.user.Account;
 
 import java.util.List;
 import java.util.Optional;

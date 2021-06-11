@@ -1,19 +1,13 @@
 package fr.esgi.whatsupdocapi.patients.infra.web.controller;
 
-import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
 import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
 import fr.esgi.whatsupdocapi.patients.infra.web.adapter.PatientAdapter;
-import fr.esgi.whatsupdocapi.patients.infra.web.request.CreatePatientRequest;
-import fr.esgi.whatsupdocapi.patients.infra.web.request.ModifyPatientRequest;
-import fr.esgi.whatsupdocapi.patients.infra.web.response.PatientIdResponse;
 import fr.esgi.whatsupdocapi.patients.infra.web.response.PatientMinimalResponse;
 import fr.esgi.whatsupdocapi.patients.infra.web.response.PatientResponse;
-import fr.esgi.whatsupdocapi.patients.model.Patient;
 import fr.esgi.whatsupdocapi.patients.service.PatientService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.Link;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,54 +52,10 @@ public class PatientController {
                 .orElseThrow(() -> {throw new NotFoundException("No patient for this ID");});
     }
 
-    @PostMapping
-    public ResponseEntity<?> createPatient(@RequestBody CreatePatientRequest request) {
-        int patientId;
-
-        //TODO Update with create Account
-        //PatientControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword());
-        //TODO faux: email in account not in Patient anymore
-        //PatientControllerHelper.verifyUniqueEmailInRepository(request.getEmail(), patientService.findPatientFromAccount(request.getAccountId()));
-
-        try {
-            patientId = patientService.addPatient(request.getFirstname(), request.getLastname(),request.getPhone(), request.getGender(),
-                    request.getBirthday(), request.getSmoker(), request.getHeight(), request.getWeight(),
-                    request.getMedical_history(), request.getFamily_medical_history(), request.getTreatment(), request.getAccountId());
-        } catch (Exception e) {
-            throw new BadRequestException("Illegal arguments for patient creation");
-        }
-        PatientIdResponse patientIdResponse = new PatientIdResponse();
-        patientIdResponse.setId(patientId);
-        return new ResponseEntity<>(patientIdResponse, HttpStatus.CREATED);
-    }
-
     @DeleteMapping(path = "/{id}")
     public void deletePatient(@PathVariable("id") int patientId) {
             patientService.deleteOne(patientId);
     }
 
-    @PutMapping
-    public void modifyPatient(@RequestBody ModifyPatientRequest request) {
-        Patient patient;
-
-        try {
-            patient = new Patient(request.getId(), request.getFirstname(), request.getLastname(),
-                    request.getPhone(), request.getGender(),
-                    request.getBirthday(), request.getSmoker(), request.getHeight(), request.getWeight(),
-                    request.getMedical_history(), request.getFamily_medical_history(), request.getTreatment(), request.getAccountId());
-
-            if (!patient.isValid()) {
-                throw new BadRequestException("Illegal arguments for patient modification");
-            }
-
-            patientService.modify(patient.getId(), patient.getFirstname(), patient.getLastname(),
-                    patient.getPhone(), patient.getGender(),
-                    patient.getBirthday(), patient.getSmoker(), patient.getHeight(), patient.getWeight(),
-                    patient.getMedical_history(), patient.getFamily_medical_history(), patient.getTreatment());
-
-        } catch (Exception e) {
-            throw new BadRequestException("Illegal arguments for patient modification");
-        }
-    }
 
 }

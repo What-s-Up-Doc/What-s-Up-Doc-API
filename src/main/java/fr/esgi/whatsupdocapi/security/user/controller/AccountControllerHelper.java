@@ -1,8 +1,8 @@
-package fr.esgi.whatsupdocapi.security.user.account.controller;
+package fr.esgi.whatsupdocapi.security.user.controller;
 
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
 import fr.esgi.whatsupdocapi.core.exceptions.ConflictException;
-import fr.esgi.whatsupdocapi.security.user.account.Account;
+import fr.esgi.whatsupdocapi.security.user.Account;
 
 import java.util.Objects;
 

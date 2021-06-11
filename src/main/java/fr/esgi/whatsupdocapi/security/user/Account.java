@@ -1,4 +1,4 @@
-package fr.esgi.whatsupdocapi.security.user.account;
+package fr.esgi.whatsupdocapi.security.user;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -17,14 +17,13 @@ public class PatientService {
 
     private final JdbcPatientRepository patientRepository;
 
-    public int addPatient(String firstname, String lastname, String email,
-                          String password, String phone, String gender, String birthday,
+    public int addPatient(String firstname, String lastname, String phone, String gender, String birthday,
                           int isSmoker, double height, double weight,
-                          String medical_history, String family_medical_history, String traitement) {
+                          String medical_history, String family_medical_history, String traitement, int accountId) {
         var patientId = patientRepository.store(firstname,
-                lastname, email, password, phone, gender,
+                lastname, phone, gender,
                 birthday, isSmoker, height, weight, medical_history,
-                family_medical_history, traitement);
+                family_medical_history, traitement, accountId);
         log.info("Stored {}", lastname);
         return patientId;
     }
@@ -44,16 +43,16 @@ public class PatientService {
         patientRepository.deleteOne(patientId);
     }
 
-    public void modify(int id, String firstname, String lastname, String email,
-                       String password, String phone, String gender, String birthday,
+    public void modify(int id, String firstname, String lastname,
+                       String phone, String gender, String birthday,
                        int isSmoker, double height, double weight,
                        String medical_history, String family_medical_history, String traitement) {
-        patientRepository.modify(id, firstname, lastname, email, password, phone,
+        patientRepository.modify(id, firstname, lastname, phone,
                 gender, birthday, isSmoker, height, weight, medical_history,
                 family_medical_history, traitement);
     }
 
-    public Patient findPatientByEmail(String email) {
-        return patientRepository.findOneFromEmail(email);
+    public Patient findPatientFromAccount(int accountId) {
+        return patientRepository.findPatientFromAccount(accountId);
     }
 }

@@ -1,4 +1,4 @@
-package fr.esgi.whatsupdocapi.doctors.infra.web.helper;
+package fr.esgi.whatsupdocapi.security.helper;
 
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
 import fr.esgi.whatsupdocapi.core.exceptions.ConflictException;
@@ -6,7 +6,7 @@ import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 
 import java.util.Objects;
 
-public class DoctorControllerHelper {
+public class AccountControllerHelper {
 
     public static void verifyPasswordValidity(String password, String confirmedPassword) throws BadRequestException {
         if(!password.equals(confirmedPassword)){

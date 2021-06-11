@@ -14,4 +14,5 @@ public class ModifyDoctorRequest {
     private String phone;
     private String gender;
     private String speciality;
+    private int accountId;
 }

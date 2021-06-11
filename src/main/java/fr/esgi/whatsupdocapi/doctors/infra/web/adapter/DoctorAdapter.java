@@ -14,7 +14,6 @@ class DoctorAdapter {
                 .setId(doctor.getId())
                 .setFirstname(doctor.getFirstname())
                 .setLastname(doctor.getLastname())
-                .setEmail(doctor.getEmail())
                 .setPhone(doctor.getPhone())
                 .setGender(doctor.getGender())
                 .setSpeciality(doctor.getSpeciality());

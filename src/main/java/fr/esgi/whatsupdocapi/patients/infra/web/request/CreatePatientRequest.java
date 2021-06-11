@@ -20,4 +20,5 @@ public class CreatePatientRequest {
     private String medical_history;
     private String family_medical_history;
     private String treatment;
+    private int accountId;
 }

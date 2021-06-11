@@ -3,7 +3,6 @@ package fr.esgi.whatsupdocapi.doctors.infra.web.controller;
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
 import fr.esgi.whatsupdocapi.core.exceptions.NotFoundException;
 import fr.esgi.whatsupdocapi.doctors.infra.web.adapter.DoctorAdapter;
-import fr.esgi.whatsupdocapi.doctors.infra.web.helper.DoctorControllerHelper;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.CreateDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.request.ModifyDoctorRequest;
 import fr.esgi.whatsupdocapi.doctors.infra.web.response.DoctorIdResponse;
@@ -64,12 +63,14 @@ public class DoctorController {
     public ResponseEntity<DoctorIdResponse> createDoctor(@RequestBody CreateDoctorRequest request) {
         int doctorId = 0;
 
-        DoctorControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword());
-        DoctorControllerHelper.verifyUniqueEmailInRepository(request.getEmail(), doctorService.findDoctorByEmail(request.getEmail()));
+        //TODO Update with create Account
+        //DoctorControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword());
+        //TODO email in account not in doctor anymore
+        //DoctorControllerHelper.verifyUniqueEmailInRepository(request.getEmail(), doctorService.findDoctorFromAccount(request.getAccountId()));
 
         try {
             doctorId = doctorService.addDoctor(request.getFirstname(), request.getLastname(),
-                    request.getEmail(), request.getPassword(), request.getPhone(), request.getGender(), request.getSpeciality());
+                    request.getPhone(), request.getGender(), request.getSpeciality(), request.getAccountId());
         } catch (Exception e) {
             throw new BadRequestException("Illegal arguments for doctor creation");
         }
@@ -89,11 +90,10 @@ public class DoctorController {
         Doctor doctor;
         try {
             doctor = new Doctor(request.getId(), request.getFirstname(), request.getLastname(),
-                                request.getEmail(), request.getPassword(), request.getPhone(),
-                                request.getGender(), request.getSpeciality());
+                    request.getPhone(),request.getGender(), request.getSpeciality(), request.getAccountId());
 
-            doctorService.modify(doctor.getId(), doctor.getFirstname(), doctor.getLastname(), doctor.getEmail(),
-                    doctor.getPassword(), doctor.getPhone(), doctor.getGender(), doctor.getSpeciality());
+            doctorService.modify(doctor.getId(), doctor.getFirstname(), doctor.getLastname(),
+                    doctor.getPhone(), doctor.getGender(), doctor.getSpeciality());
         } catch (Exception e) {
             throw new BadRequestException("Illegal arguments for doctor modification");
         }

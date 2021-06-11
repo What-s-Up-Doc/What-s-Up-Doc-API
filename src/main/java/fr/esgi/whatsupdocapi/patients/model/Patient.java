@@ -3,10 +3,12 @@ package fr.esgi.whatsupdocapi.patients.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class Patient{
     private Integer id;
     private String firstname;

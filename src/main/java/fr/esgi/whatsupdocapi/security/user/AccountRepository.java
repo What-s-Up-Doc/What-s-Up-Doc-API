@@ -5,18 +5,17 @@ import java.util.Optional;
 
 public interface AccountRepository {
 
-    public String store(String email, String password);
+    String store(String email, String password, String role);
 
-    public int count();
+    int count();
 
-    public Account findOneFromEmail(String email);
+    Account findOneFromEmail(String email);
 
-    public List<Account> findAll();
+    List<Account> findAll();
 
-    public Optional<Account> findOne(int accountId);
+    Optional<Account> findOne(int accountId);
 
-    public void deleteOne(int accountId);
+    void deleteOne(int accountId);
 
-    public void modify(String email, String password);
-
+    void modify(String email, String password);
 }

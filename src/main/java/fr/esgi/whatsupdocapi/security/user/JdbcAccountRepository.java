@@ -19,9 +19,9 @@ public class JdbcAccountRepository implements AccountRepository {
     private final AccountRowMapper mapper;
 
     @Override
-    public String store(String email, String password) {
-        jdbcTemplate.update("INSERT INTO account (email, password) " +
-                "VALUES (?, ?)", email, password);
+    public String store(String email, String password, String role) {
+        jdbcTemplate.update("INSERT INTO account (email, password, role) " +
+                "VALUES (?, ?, ?)", email, password, role);
         return findOneFromEmail(email).getEmail();
     }
 

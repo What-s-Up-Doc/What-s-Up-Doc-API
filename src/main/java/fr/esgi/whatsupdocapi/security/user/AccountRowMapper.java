@@ -14,6 +14,7 @@ class AccountRowMapper implements RowMapper<Account> {
         Account account = new Account();
         account.setEmail(rs.getString("email"));
         account.setPassword(rs.getString("password"));
+        account.setRole(rs.getString("role"));
         return account;
     }
 }

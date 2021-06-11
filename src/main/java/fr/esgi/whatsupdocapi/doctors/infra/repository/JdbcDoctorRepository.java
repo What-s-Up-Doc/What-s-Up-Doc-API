@@ -2,6 +2,7 @@ package fr.esgi.whatsupdocapi.doctors.infra.repository;
 
 import fr.esgi.whatsupdocapi.doctors.model.Doctor;
 import fr.esgi.whatsupdocapi.doctors.model.DoctorRepository;
+import fr.esgi.whatsupdocapi.security.user.Account;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class JdbcDoctorRepository implements DoctorRepository {
 
 
     @Override
-    public int store(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
-        jdbcTemplate.update("INSERT INTO doctor (id, firstname, lastname, email, password, phone, gender, speciality) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, email, password, phone, gender, speciality);
+    public int store(String firstname, String lastname, String phone, String gender, String speciality, String email) {
+        jdbcTemplate.update("INSERT INTO doctor (id, firstname, lastname, phone, gender, speciality) VALUES (?, ?, ?, ?, ?, ?)", null, firstname, lastname, phone, gender, speciality);
         return findOneFromEmail(email).getId();
     }
 
@@ -60,9 +61,9 @@ public class JdbcDoctorRepository implements DoctorRepository {
     }
 
     @Override
-    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
-        String SQL = "Update doctor set firstname = ?, lastname = ?, email = ?, password = ?, phone = ?, gender = ?, speciality = ? where id = ?";
-        jdbcTemplate.update(SQL, firstname, lastname, email, password, phone, gender, speciality, id);
+    public void modify(int id, String firstname, String lastname, String phone, String gender, String speciality) {
+        String SQL = "Update doctor set firstname = ?, lastname = ?, phone = ?, gender = ?, speciality = ? where id = ?";
+        jdbcTemplate.update(SQL, firstname, lastname, phone, gender, speciality, id);
     }
 
 

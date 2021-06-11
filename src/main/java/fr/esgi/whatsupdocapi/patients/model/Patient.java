@@ -13,8 +13,6 @@ public class Patient{
     private Integer id;
     private String firstname;
     private String lastname;
-    private String email;
-    private String password;
     private String phone;
     private String gender;
     private String birthday;
@@ -24,13 +22,12 @@ public class Patient{
     private String medical_history;
     private String family_medical_history;
     private String treatment;
+    private String email;
 
     public boolean isValid() {
         return this.getId() != null &&
                 this.getFirstname() != null &&
                 this.getLastname() != null &&
-                this.getEmail() != null &&
-                this.getPassword() != null &&
                 this.getPhone() != null &&
                 this.getGender() != null &&
                 this.birthday != null &&
@@ -39,6 +36,7 @@ public class Patient{
                 this.height != null &&
                 this.medical_history != null &&
                 this.family_medical_history != null &&
-                this.treatment != null;
+                this.treatment != null &&
+                this.email != null;
     }
 }

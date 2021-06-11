@@ -1,4 +1,4 @@
-package fr.esgi.whatsupdocapi.security.user.response;
+package fr.esgi.whatsupdocapi.security.user.account.response;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -6,7 +6,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 @Data
 @Accessors(chain = true)
-public class AccountDoctorResponse extends RepresentationModel<AccountDoctorResponse> {
+public class AccountPatientResponse extends RepresentationModel<AccountPatientResponse> {
     private int id;
     private String email;
 }

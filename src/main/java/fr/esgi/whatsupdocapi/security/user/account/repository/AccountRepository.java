@@ -1,13 +1,13 @@
-package fr.esgi.whatsupdocapi.security.user.repository;
+package fr.esgi.whatsupdocapi.security.user.account.repository;
 
-import fr.esgi.whatsupdocapi.security.user.Account;
+import fr.esgi.whatsupdocapi.security.user.account.Account;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AccountRepository {
 
-    String store(int id, String email, String password, String role);
+    int store(String email, String password, String role);
 
     int count();
 

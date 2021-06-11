@@ -1,6 +1,6 @@
-package fr.esgi.whatsupdocapi.security.user.repository;
+package fr.esgi.whatsupdocapi.security.user.account.repository;
 
-import fr.esgi.whatsupdocapi.security.user.Account;
+import fr.esgi.whatsupdocapi.security.user.account.Account;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ public class JdbcAccountRepository implements AccountRepository {
     private final AccountRowMapper mapper;
 
     @Override
-    public String store(int id, String email, String password, String role) {
+    public int store(String email, String password, String role) {
         jdbcTemplate.update("INSERT INTO account (null, email, password, role) " +
                 "VALUES (?, ?, ?)", email, password, role);
-        return findOneFromEmail(email).getEmail();
+        return findOneFromEmail(email).getId();
     }
 
     @Override

@@ -85,7 +85,7 @@ public class PatientController {
     }
 
     @PutMapping
-    public void modifyDoctor(@RequestBody ModifyPatientRequest request) {
+    public void modifyPatient(@RequestBody ModifyPatientRequest request) {
         Patient patient;
 
         try {

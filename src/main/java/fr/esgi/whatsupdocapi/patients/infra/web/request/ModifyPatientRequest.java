@@ -9,8 +9,6 @@ public class ModifyPatientRequest {
     private int id;
     private String firstname;
     private String lastname;
-    private String email;
-    private String password;
     private String phone;
     private String gender;
     private String birthday;

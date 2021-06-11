@@ -1,16 +1,16 @@
-package fr.esgi.whatsupdocapi.security.user.request;
+package fr.esgi.whatsupdocapi.security.user.account.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CreateAccountPatientRequest {
+public class ModifyAccountPatientRequest {
+    private int id;
     private String firstname;
     private String lastname;
     private String email;
     private String password;
-    private String confirmedPassword;
     private String phone;
     private String gender;
     private String birthday;

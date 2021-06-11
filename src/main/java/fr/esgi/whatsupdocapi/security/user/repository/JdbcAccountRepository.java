@@ -21,7 +21,7 @@ public class JdbcAccountRepository implements AccountRepository {
 
     @Override
     public int store(String email, String password, String role) {
-        jdbcTemplate.update("INSERT INTO account (null, email, password, role) " +
+        jdbcTemplate.update("INSERT INTO account (email, password, role) " +
                 "VALUES (?, ?, ?)", email, password, role);
         return findOneFromEmail(email).getId();
     }

@@ -1,20 +1,19 @@
 package fr.esgi.whatsupdocapi.doctors.model;
 
-import fr.esgi.whatsupdocapi.core.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
 
 @Data
-@Accessors(chain = true)
-public class Doctor extends User {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Doctor{
+    private Integer id;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private String password;
+    private String phone;
+    private String gender;
     private String speciality;
-
-    public Doctor(int id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
-        super(id, firstname, lastname, email, password, phone, gender);
-        this.speciality = speciality;
-    }
-
-    public Doctor() {
-
-    }
 }

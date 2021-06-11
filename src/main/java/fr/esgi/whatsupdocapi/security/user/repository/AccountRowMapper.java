@@ -1,5 +1,6 @@
-package fr.esgi.whatsupdocapi.security.user;
+package fr.esgi.whatsupdocapi.security.user.repository;
 
+import fr.esgi.whatsupdocapi.security.user.Account;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

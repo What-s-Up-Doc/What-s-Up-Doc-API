@@ -23,8 +23,6 @@ public class PatientControllerTest {
     @Mock
     PatientService patientService;
 
-    @Mock
-    PatientAdapter patientAdapter;
 
     @Test
     public void shouldCallFindAllPatient()throws Exception {

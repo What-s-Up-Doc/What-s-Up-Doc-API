@@ -16,7 +16,6 @@ class PatientRowMapper implements RowMapper<Patient> {
         patient.setId(rs.getInt("id"));
         patient.setFirstname(rs.getString("firstname"));
         patient.setLastname(rs.getString("lastname"));
-        patient.setEmail(rs.getString("email"));
         patient.setPhone(rs.getString("phone"));
         patient.setGender(rs.getString("gender"));
         patient.setBirthday(rs.getString("birthday"));
@@ -26,6 +25,7 @@ class PatientRowMapper implements RowMapper<Patient> {
         patient.setMedical_history(rs.getString("medical_history"));
         patient.setFamily_medical_history(rs.getString("family_medical_history"));
         patient.setTreatment(rs.getString("treatment"));
+        patient.setAccountId(rs.getInt("accountId"));
         return patient;
     }
 }

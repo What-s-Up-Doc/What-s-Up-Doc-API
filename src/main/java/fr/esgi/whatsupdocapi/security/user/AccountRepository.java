@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface AccountRepository {
 
-    String store(String email, String password, String role);
+    String store(int id, String email, String password, String role);
 
     int count();
 
@@ -17,5 +17,5 @@ public interface AccountRepository {
 
     void deleteOne(int accountId);
 
-    void modify(String email, String password);
+    void modify(int id, String email, String password);
 }

@@ -22,7 +22,7 @@ public class Patient{
     private String medical_history;
     private String family_medical_history;
     private String treatment;
-    private String email;
+    private Integer accountId;
 
     public boolean isValid() {
         return this.getId() != null &&
@@ -37,6 +37,6 @@ public class Patient{
                 this.medical_history != null &&
                 this.family_medical_history != null &&
                 this.treatment != null &&
-                this.email != null;
+                this.accountId != null;
     }
 }

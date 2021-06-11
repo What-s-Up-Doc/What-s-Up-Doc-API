@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface DoctorRepository {
 
-    int store(String firstname, String lastname, String phone, String gender, String speciality, String email);
+    int store(String firstname, String lastname, String phone, String gender, String speciality, int accountId);
 
     int count();
 

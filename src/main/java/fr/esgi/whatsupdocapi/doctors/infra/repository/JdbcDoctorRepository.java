@@ -24,9 +24,9 @@ public class JdbcDoctorRepository implements DoctorRepository {
 
 
     @Override
-    public int store(String firstname, String lastname, String phone, String gender, String speciality, String email) {
+    public int store(String firstname, String lastname, String phone, String gender, String speciality, int accountId) {
         jdbcTemplate.update("INSERT INTO doctor (id, firstname, lastname, phone, gender, speciality) VALUES (?, ?, ?, ?, ?, ?)", null, firstname, lastname, phone, gender, speciality);
-        return findOneFromEmail(email).getId();
+        return findDoctorFromAccount(accountId).getId();
     }
 
     @Override
@@ -48,8 +48,8 @@ public class JdbcDoctorRepository implements DoctorRepository {
         return Optional.of(doctors.get(0));
     }
 
-    public Doctor findOneFromEmail(String email) {
-        List<Doctor> doctors = jdbcTemplate.query("select * from doctor where email = ?", mapper, new Object[]{ email });
+    public Doctor findDoctorFromAccount(int accountId) {
+        List<Doctor> doctors = jdbcTemplate.query("select * from doctor where accountId = ?", mapper, new Object[]{ accountId });
         if(doctors.isEmpty()) return null;
         return doctors.get(0);
     }

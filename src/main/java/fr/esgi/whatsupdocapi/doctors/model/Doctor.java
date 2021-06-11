@@ -16,5 +16,5 @@ public class Doctor{
     private String phone;
     private String gender;
     private String speciality;
-    private String email;
+    private Integer accountId;
 }

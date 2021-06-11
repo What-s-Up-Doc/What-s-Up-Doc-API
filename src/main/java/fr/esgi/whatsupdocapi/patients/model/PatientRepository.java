@@ -7,7 +7,7 @@ public interface PatientRepository {
     int store(String firstname, String lastname,
               String phone, String gender, String birthday,
               int isSmoker, double height, double weight,
-              String medical_history, String family_medical_history, String traitement, String email);
+              String medical_history, String family_medical_history, String traitement, int accountId);
 
     int count();
 
@@ -19,5 +19,5 @@ public interface PatientRepository {
 
     void modify(int id, String firstname, String lastname, String phone, String gender, String birthday,
                 int isSmoker, double height, double weight,
-                String medical_history, String family_medical_history, String traitement, String email);
+                String medical_history, String family_medical_history, String traitement);
 }

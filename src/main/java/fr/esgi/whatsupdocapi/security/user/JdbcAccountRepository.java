@@ -19,8 +19,8 @@ public class JdbcAccountRepository implements AccountRepository {
     private final AccountRowMapper mapper;
 
     @Override
-    public String store(String email, String password, String role) {
-        jdbcTemplate.update("INSERT INTO account (email, password, role) " +
+    public String store(int id, String email, String password, String role) {
+        jdbcTemplate.update("INSERT INTO account (null, email, password, role) " +
                 "VALUES (?, ?, ?)", email, password, role);
         return findOneFromEmail(email).getEmail();
     }
@@ -57,9 +57,9 @@ public class JdbcAccountRepository implements AccountRepository {
     }
 
     @Override
-    public void modify(String email, String password) {
-        String SQL = "Update account set email = ?, password = ? where email = ?";
-        jdbcTemplate.update(SQL, email, password, email);
+    public void modify(int id, String email, String password) {
+        String SQL = "Update account set email = ?, password = ? where id = ?";
+        jdbcTemplate.update(SQL, email, password, id);
     }
 
 }

@@ -19,7 +19,7 @@ class DoctorRowMapper implements RowMapper<Doctor> {
         doctor.setPhone(rs.getString("phone"));
         doctor.setGender(rs.getString("gender"));
         doctor.setSpeciality(rs.getString("speciality"));
-        doctor.setAccountId(rs.getInt("accountId"));
+        doctor.setAccountId(rs.getInt("id_account"));
         return doctor;
     }
 }

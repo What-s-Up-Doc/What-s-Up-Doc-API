@@ -13,13 +13,9 @@
     <version>1.0.0-SNAPSHOT</version>
     <name>What-s-Up-Doc-API</name>
     <description>Projet d API médicale</description>
-
     <properties>
         <java.version>11</java.version>
-        <jjwt.version>0.9.1</jjwt.version>
-        <jaxb.version>2.3.1</jaxb.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -83,20 +79,6 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>4.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>${jaxb.version}</version>
         </dependency>
     </dependencies>
 

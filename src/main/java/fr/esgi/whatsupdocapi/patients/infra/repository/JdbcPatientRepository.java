@@ -22,8 +22,8 @@ public class JdbcPatientRepository implements PatientRepository {
 
     @Override
     public int store(String firstname, String lastname, String phone, String gender, String birthday, int smoker, double height, double weight, String medical_history, String family_medical_history, String treatment, int accountId) {
-        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment);
+        jdbcTemplate.update("INSERT INTO patient (id, firstname, lastname, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment, id_account) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", null, firstname, lastname, phone, gender, birthday, smoker, height, weight, medical_history, family_medical_history, treatment, accountId);
         return findPatientFromAccount(accountId).getId();
     }
 

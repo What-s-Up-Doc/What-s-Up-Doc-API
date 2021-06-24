@@ -1,6 +1,5 @@
 package fr.esgi.whatsupdocapi.patients.model;
 
-import fr.esgi.whatsupdocapi.core.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,12 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Patient extends User {
+public class Patient{
+    private Integer id;
+    private String firstname;
+    private String lastname;
+    private String phone;
+    private String gender;
     private String birthday;
     private Integer smoker;
     private Double height;
@@ -18,25 +22,12 @@ public class Patient extends User {
     private String medical_history;
     private String family_medical_history;
     private String treatment;
-
-    public Patient(int id, String firstname, String lastname, String email, String password, String phone,
-                   String gender, String birthday, int smoker, double height, double weight, String medical_history, String family_medical_history, String treatment) {
-        super(id, firstname, lastname, email, password, phone, gender);
-        this.birthday = birthday;
-        this.smoker = smoker;
-        this.height = height;
-        this.weight = weight;
-        this.medical_history = medical_history;
-        this.family_medical_history = family_medical_history;
-        this.treatment = treatment;
-    }
+    private Integer accountId;
 
     public boolean isValid() {
         return this.getId() != null &&
                 this.getFirstname() != null &&
                 this.getLastname() != null &&
-                this.getEmail() != null &&
-                this.getPassword() != null &&
                 this.getPhone() != null &&
                 this.getGender() != null &&
                 this.birthday != null &&
@@ -45,6 +36,7 @@ public class Patient extends User {
                 this.height != null &&
                 this.medical_history != null &&
                 this.family_medical_history != null &&
-                this.treatment != null;
+                this.treatment != null &&
+                this.accountId != null;
     }
 }

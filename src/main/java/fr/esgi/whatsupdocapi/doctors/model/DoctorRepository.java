@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DoctorRepository {
-    int store(String firstname, String lastname,
-                 String email, String password, String phone,
-                 String gender, String speciality);
+
+    int store(String firstname, String lastname, String phone, String gender, String speciality, int accountId);
 
     int count();
 
@@ -18,7 +17,6 @@ public interface DoctorRepository {
 
     void deleteOne(int doctorId);
 
-    void modify(int id, String firstname, String lastname,
-                String email, String password, String phone,
+    void modify(int id, String firstname, String lastname, String phone,
                 String gender, String speciality);
 }

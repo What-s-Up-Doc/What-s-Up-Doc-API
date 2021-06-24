@@ -18,8 +18,8 @@ public class DoctorService {
 
     private final JdbcDoctorRepository doctorRepository;
 
-    public int addDoctor(String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
-        var doctorId = doctorRepository.store(firstname, lastname, email, password, phone, gender, speciality);
+    public int addDoctor(String firstname, String lastname, String phone, String gender, String speciality, int accountId) {
+        var doctorId = doctorRepository.store(firstname, lastname, phone, gender, speciality, accountId);
         log.info("Stored {}", lastname);
         return doctorId;
     }
@@ -39,11 +39,11 @@ public class DoctorService {
         doctorRepository.deleteOne(doctorId);
     }
 
-    public void modify(int id, String firstname, String lastname, String email, String password, String phone, String gender, String speciality) {
-        doctorRepository.modify(id, firstname, lastname, email, password, phone, gender, speciality);
+    public void modify(int id, String firstname, String lastname, String phone, String gender, String speciality) {
+        doctorRepository.modify(id, firstname, lastname, phone, gender, speciality);
     }
 
-    public Doctor findDoctorByEmail(String email){
-        return doctorRepository.findOneFromEmail(email);
+    public Doctor findDoctorFromAccount(int accountId){
+        return doctorRepository.findDoctorFromAccount(accountId);
     }
 }

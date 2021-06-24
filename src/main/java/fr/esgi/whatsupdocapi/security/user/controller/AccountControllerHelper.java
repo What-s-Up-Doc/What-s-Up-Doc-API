@@ -1,12 +1,12 @@
-package fr.esgi.whatsupdocapi.doctors.infra.web.helper;
+package fr.esgi.whatsupdocapi.security.user.controller;
 
 import fr.esgi.whatsupdocapi.core.exceptions.BadRequestException;
 import fr.esgi.whatsupdocapi.core.exceptions.ConflictException;
-import fr.esgi.whatsupdocapi.doctors.model.Doctor;
+import fr.esgi.whatsupdocapi.security.user.Account;
 
 import java.util.Objects;
 
-public class DoctorControllerHelper {
+public class AccountControllerHelper {
 
     public static void verifyPasswordValidity(String password, String confirmedPassword) throws BadRequestException {
         if(!password.equals(confirmedPassword)){
@@ -14,10 +14,9 @@ public class DoctorControllerHelper {
         }
     }
 
-    public static void verifyUniqueEmailInRepository(String email, Doctor doctor) throws ConflictException {
-        if(Objects.nonNull(doctor)){
+    public static void verifyUniqueEmailInRepository(Account account) throws ConflictException {
+        if(Objects.nonNull(account)){
             throw new ConflictException("A user with this email address has already been created.");
         }
     }
-
 }

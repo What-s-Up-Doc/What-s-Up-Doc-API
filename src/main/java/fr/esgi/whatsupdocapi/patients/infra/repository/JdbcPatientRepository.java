@@ -33,7 +33,7 @@ public class JdbcPatientRepository implements PatientRepository {
     }
 
     public Patient findPatientFromAccount(int accountId) {
-        List<Patient> patients = jdbcTemplate.query("select * from patient where accountId = ?", mapper, new Object[]{ accountId });
+        List<Patient> patients = jdbcTemplate.query("select * from patient where id_account = ?", mapper, new Object[]{ accountId });
         if (patients.isEmpty()) return null;
         return patients.get(0);
     }

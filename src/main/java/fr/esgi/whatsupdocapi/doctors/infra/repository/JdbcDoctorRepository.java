@@ -49,7 +49,7 @@ public class JdbcDoctorRepository implements DoctorRepository {
     }
 
     public Doctor findDoctorFromAccount(int accountId) {
-        List<Doctor> doctors = jdbcTemplate.query("select * from doctor where accountId = ?", mapper, new Object[]{ accountId });
+        List<Doctor> doctors = jdbcTemplate.query("select * from doctor where id_account = ?", mapper, new Object[]{ accountId });
         if(doctors.isEmpty()) return null;
         return doctors.get(0);
     }

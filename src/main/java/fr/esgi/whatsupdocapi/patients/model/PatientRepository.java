@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PatientRepository {
-    int store(String firstname, String lastname, String email,
-              String password, String phone, String gender, String birthday,
+    int store(String firstname, String lastname,
+              String phone, String gender, String birthday,
               int isSmoker, double height, double weight,
-              String medical_history, String family_medical_history, String traitement);
+              String medical_history, String family_medical_history, String traitement, int accountId);
 
     int count();
 
@@ -17,8 +17,7 @@ public interface PatientRepository {
 
     void deleteOne(int patientId);
 
-    void modify(int id, String firstname, String lastname, String email,
-                String password, String phone, String gender, String birthday,
+    void modify(int id, String firstname, String lastname, String phone, String gender, String birthday,
                 int isSmoker, double height, double weight,
                 String medical_history, String family_medical_history, String traitement);
 }

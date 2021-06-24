@@ -14,7 +14,6 @@ class PatientAdapter {
                 .setId(patient.getId())
                 .setFirstname(patient.getFirstname())
                 .setLastname(patient.getLastname())
-                .setEmail(patient.getEmail())
                 .setPhone(patient.getPhone())
                 .setGender(patient.getGender())
                 .setBirthday(patient.getBirthday())

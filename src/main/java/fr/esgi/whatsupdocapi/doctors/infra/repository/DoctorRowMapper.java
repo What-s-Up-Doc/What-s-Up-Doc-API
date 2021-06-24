@@ -16,11 +16,10 @@ class DoctorRowMapper implements RowMapper<Doctor> {
         doctor.setId(rs.getInt("id"));
         doctor.setFirstname(rs.getString("firstname"));
         doctor.setLastname(rs.getString("lastname"));
-        doctor.setEmail(rs.getString("email"));
-        doctor.setPassword(rs.getString("password"));
         doctor.setPhone(rs.getString("phone"));
         doctor.setGender(rs.getString("gender"));
         doctor.setSpeciality(rs.getString("speciality"));
+        doctor.setAccountId(rs.getInt("id_account"));
         return doctor;
     }
 }

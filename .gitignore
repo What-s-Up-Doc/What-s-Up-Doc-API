@@ -5,7 +5,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 docker-compose.yml
-
+**/src/main/java/fr/esgi/whatsupdocapi/JpaConfig
 ### STS ###
 .apt_generated
 .classpath

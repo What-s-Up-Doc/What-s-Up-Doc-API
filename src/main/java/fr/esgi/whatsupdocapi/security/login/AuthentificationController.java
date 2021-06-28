@@ -1,6 +1,10 @@
 package fr.esgi.whatsupdocapi.security.login;
 
 import fr.esgi.whatsupdocapi.security.TokenProvider;
+import fr.esgi.whatsupdocapi.security.user.Account;
+import fr.esgi.whatsupdocapi.security.user.service.AccountService;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,30 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-
+@Data
 @RestController
 @RequestMapping("/api/login")
+@RequiredArgsConstructor
 public class AuthentificationController {
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManager;
-
-    public AuthentificationController(TokenProvider tokenProvider,
-                                      AuthenticationManagerBuilder authenticationManager) {
-        this.tokenProvider = tokenProvider;
-        this.authenticationManager = authenticationManager;
-    }
+    private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginDTO loginDTO) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
 
-        Authentication authentication = authenticationManager.getObject().authenticate(authenticationToken);
+        authenticationManager.getObject().authenticate(authenticationToken);
+        Account account = this.accountService.findAccountByEmail(loginDTO.getEmail());
+        String token = tokenProvider.createToken(account);
+        LoginResponse response = new LoginResponse();
+        response.setToken(token);
 
-        String token = tokenProvider.createToken(authentication);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(AUTHORIZATION, "Bearer " + token);
-
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -2,7 +2,7 @@ name: What-s-up-doc-API
 
 on:
   push:
-    branches: [ main ]
+    branches: [ test-ci-cd ]
 
 jobs:
   api:

@@ -5,9 +5,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - EXTERNAL_API_URL=
-      - EXTERNAL_API_KEY=
-      - EXTERNAL_API_LANGUAGE=
-      - DB_USERNAME=
-      - DB_PASSWORD=
-      - DB_URL=
+      - spring_datasource_driver-class-name=org.mariadb.jdbc.Driver
+      - spring_datasource_url=jdbc:mariadb://<IP>:<PORT>/<DB>
+      - spring_datasource_username=
+      - spring_datasource_password=
+      - server_error_include-message=always
+      - external_api_url=
+      - external_api_key=
+      - external_api_language=

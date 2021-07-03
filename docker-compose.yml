@@ -13,3 +13,31 @@ services:
       - external_api_url=
       - external_api_key=
       - external_api_language=
+      - management_endpoint_health_showDetails=always
+      - management_endpoint_metrics_enabled=true
+      - management_endpoints_web_exposure_include=*
+      - management_endpoint_prometheus_enabled=true
+      - management_metrics_export_prometheus_enabled=true
+
+  grafana:
+    image: grafana/grafana
+    restart: 'always'
+    volumes:
+      - ./volumes/grafana/lib:/var/lib/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    volumes:
+      - ./volumes/prometheus/lib:/var/lib/prometheus
+      - ./volumes/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    depends_on:
+      - api

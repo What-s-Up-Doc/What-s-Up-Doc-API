@@ -28,17 +28,24 @@ public class AuthentificationController {
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManager;
-    private final DomainUserDetailsService domainUserDetailsService;
+    private final AccountService accountService;
 
     @PostMapping
     public ResponseEntity<LoginResponse> login(@RequestBody LoginDTO loginDTO) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
 
-        Authentication authentication = authenticationManager.getObject().authenticate(authenticationToken);
+        Account account = accountService.findAccountByEmail(loginDTO.getEmail());
+        account.setRole("ROLE_" + account.getRole());
 
-        String token = tokenProvider.createToken(authentication);
+        String token = tokenProvider.createToken(account.getEmail(), account.getRole());
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                loginDTO.getEmail(),
+                loginDTO.getPassword());
+        authenticationManager.getObject().authenticate(authenticationToken);
+
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(AUTHORIZATION, "Bearer " + token);
+        httpHeaders.add(AUTHORIZATION, token);
+
 
         return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
     }

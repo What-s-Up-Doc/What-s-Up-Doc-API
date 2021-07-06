@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,13 +21,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping(path = "/doctors")
     public ResponseEntity<AccountIdResponse> createDoctorAccount(@RequestBody CreateAccountDoctorRequest request) {
         AccountControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword());
         AccountControllerHelper.verifyUniqueEmailInRepository(accountService.findAccountByEmail(request.getEmail()));
 
-        int accountId = accountService.addAccount(request.getEmail(), request.getPassword(), "DOCTOR");
+        int accountId = accountService.addAccount(request.getEmail(), passwordEncoder.encode(request.getPassword()), "DOCTOR");
 
         try {
             accountService.addDoctor(request.getFirstname(), request.getLastname(),
@@ -44,7 +46,7 @@ public class AccountController {
         AccountControllerHelper.verifyPasswordValidity(request.getPassword(), request.getConfirmedPassword());
         AccountControllerHelper.verifyUniqueEmailInRepository(accountService.findAccountByEmail(request.getEmail()));
 
-        int accountId = accountService.addAccount(request.getEmail(), request.getPassword(), "PATIENT");
+        int accountId = accountService.addAccount(request.getEmail(), passwordEncoder.encode(request.getPassword()), "PATIENT");
         try {
             accountService.addPatient(request.getFirstname(), request.getLastname(),
                     request.getPhone(), request.getGender(), request.getBirthday(),
@@ -72,7 +74,7 @@ public class AccountController {
     @PutMapping(path = "/doctor")
     public void modifyDoctor(@RequestBody ModifyAccountDoctorRequest request) {
         try {
-            accountService.modifyAccount(request.getEmail(), request.getPassword());
+            accountService.modifyAccount(request.getEmail(), passwordEncoder.encode(request.getPassword()));
             accountService.modifyDoctor(request.getId(), request.getFirstname(), request.getLastname(),
                     request.getPhone(), request.getGender(), request.getSpeciality());
         } catch (Exception e) {
@@ -83,7 +85,7 @@ public class AccountController {
     @PutMapping
     public void modifyPatient(@RequestBody ModifyAccountPatientRequest request) {
         try {
-            accountService.modifyAccount(request.getEmail(), request.getPassword());
+            accountService.modifyAccount(request.getEmail(), passwordEncoder.encode(request.getPassword()));
             accountService.modifyPatient(request.getId(), request.getFirstname(), request.getLastname(),
                     request.getPhone(), request.getGender(),
                     request.getBirthday(), request.getSmoker(), request.getHeight(), request.getWeight(),

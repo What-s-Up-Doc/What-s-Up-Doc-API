@@ -2,6 +2,7 @@ package fr.esgi.whatsupdocapi.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,11 +29,14 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .csrf().disable()
             .authorizeRequests()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/account").permitAll()
                 .antMatchers("/api/account/**").permitAll()
                 .antMatchers("/api/diagnosis/**").hasRole("DOCTOR")
                 .antMatchers("/api/appointment/**").hasAnyRole("DOCTOR", "PATIENT")
+                .antMatchers("/api/doctors/**").hasRole("DOCTOR")
+                .antMatchers(HttpMethod.GET,"/api/doctors").permitAll()
                 .antMatchers("/api/doctors/**").hasRole("DOCTOR")
                 .antMatchers("/api/patients/**").hasRole("PATIENT")
             .anyRequest()
